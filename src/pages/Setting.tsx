@@ -2,18 +2,32 @@ import React from 'react'
 import { useEffect } from 'react';
 import { themeChange } from 'theme-change';
 import SideBar from '../components/SideBar';
+import { logout, reset } from '../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 function Setting() {
     const themeValues = [
         "mytheme",
         "light", "dark", "cupcake", "bumblebee", "emerald", "corporate", "synthwave", "retro", "cyberpunk", "valentine", "halloween", "garden", "forest", "aqua", "lofi", "pastel", "fantasy", "wireframe", "black", "luxury", "dracula", "cmyk", "autumn", "business", "acid", "lemonade", "night", "coffee", "winter"
     ];
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch<any>();
     useEffect(() => {
         themeChange(false);
     });
+
+
+
+    const onLogout = () => {
+        dispatch(logout());
+        dispatch(reset());
+        navigate('/sign-in');
+    }
+
     return (
-        <div className="flex">
+        <div className="">
 
             <div>
                 <select name="text-primary" data-choose-theme>
@@ -22,6 +36,9 @@ function Setting() {
                         <option className="text-primary" key={value.toLowerCase()} value={value.toLowerCase()}>{value.toLowerCase()}</option>
                     ))}
                 </select>
+            </div>
+            <div>
+                <button className="btn btn-primary" onClick={() => onLogout()}>Log Out</button>
             </div>
         </div>
     )

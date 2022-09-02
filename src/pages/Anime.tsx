@@ -1,16 +1,15 @@
 import { json } from 'body-parser';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom';
+// import PlyrHls from '../components/PlyrHls';
 import { getAnimeInfo, getAnimeEpisode } from '../features/gogoanime/gogoanimeSlice';
-
-import Plyr from 'plyr';
-const player = new Plyr('#player');
+import { Plyr } from '../components/Plyr';
 
 function Anime() {
 
     const [gogoInfo, setGogoInfo]: any = useState([]);//info from gogoanime
     const [episodeLists, setEpisodeLists]: any = useState([]);//eps from gogoanime
-    const [episodes, setEpisodes] = useState([]);
+    const [episodes, setEpisodes]: any = useState(null);
 
     //url 
     const url = window.location.pathname;
@@ -27,12 +26,13 @@ function Anime() {
     const getEpisodeList = async () => {
         var data = await getAnimeInfo(id)
         setGogoInfo(data);
-
         //set all eps into unactive and activate last episode
         data.episodes.forEach((item: any) => {
             item['active'] = false;
             if (item.number === data.episodes[data.episodes.length - 1].number) {
                 item.active = true;
+                getEpisodeSource(item.id);
+                console.log(item.id);
             }
         })
 
@@ -41,16 +41,18 @@ function Anime() {
 
     const getEpisodeSource = async (episodeId: string) => {
         const eps = await getAnimeEpisode(episodeId);
+        console.log(eps.sources[0].url);
         setEpisodes(eps);
     }
 
     // active episode or current episodes
     const activeEpisode: any = (number: number) => {
         var newArr = [...episodeLists];
-
+        console.log("test2");
         newArr.forEach((item: any) => {
             item.active = false;
             if (item.number === number) {
+                getEpisodeSource(item.id);
                 item.active = true;
             }
         })
@@ -62,11 +64,14 @@ function Anime() {
         getEpisodeList();
     }, []);
 
+
+
     return (
+
         <div className="flex flex-col items-center">
             <div className="w-[500px] h-[280px] bg-secondary">
-                player
-
+                {/* {episodes && <PlyrHls url={episodes.sources[0].url} />} */}
+                {episodes && <Plyr source={episodes.sources[0].url}></Plyr>}
             </div>
             <div className="px-2.5">
                 <div className="text-neutral font-bold text-2xl">
@@ -81,6 +86,13 @@ function Anime() {
                     </div>
                 ))}
             </div>
+
+            {/* {episodes &&
+                <div>
+                    {episodes}
+                </div>
+            } */}
+
         </div>
     )
 }
