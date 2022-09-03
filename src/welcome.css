@@ -19,7 +19,7 @@
     overflow: hidden;
 }
 
-@media screen and (min-width: 400px) {
+@media screen and (min-width: 300px) {
     @keyframes scroll {
         0% {
             transform: translateY(0);
