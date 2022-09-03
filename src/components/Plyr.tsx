@@ -25,8 +25,8 @@ export const Plyr = React.forwardRef<HTMLPlyrVideoElement, PlyrProps>(
         const videoOptions: PlyrJS.Options = {
             ...options,
             quality: {
-                default: 144,
-                options: [144],
+                default: 1080,
+                options: [1080],
             },
         };
 
