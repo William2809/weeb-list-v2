@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from "qs";
-const API_URL = '/api/gogoanime';
+const API_URL = process.env.REACT_APP_BACKEND_URL + '/api/gogoanime';
 
 //get latest anime
 const getLatest = async (token: string, page: number) => {

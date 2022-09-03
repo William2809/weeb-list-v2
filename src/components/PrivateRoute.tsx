@@ -3,7 +3,7 @@ import { useAuthStatus } from '../hooks/useAuthStatus';
 
 const PrivateRoute = () => {
     const { loggedIn, checkingStatus } = useAuthStatus();
-
+    console.log(loggedIn);
     if (checkingStatus) {
         return <div>
             Loading...
