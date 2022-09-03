@@ -46,17 +46,17 @@ const GoogleAuth = () => {
     }, []);
 
     function handleCredentialResponse(response) {
-        console.log("Encoded JWT ID token: " + response.credential);
+        // console.log("Encoded JWT ID token: " + response.credential);
         const decoded = jwt_decode(response.credential);
 
-        console.log(decoded);
+        // console.log(decoded);
         const userData = {
             name: decoded.name,
             email: decoded.email,
             picture: decoded.picture,
         };
 
-        console.log(userData);
+        // console.log(userData);
         dispatch(googleSignIn(userData));
     }
 
