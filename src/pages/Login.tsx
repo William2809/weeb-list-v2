@@ -10,15 +10,13 @@ import Google from "../features/auth/GoogleAuth";
 function Login() {
     const [formData, setFormData] = useState({
         username: '',
-        email: '',
         password: '',
-        passwordConfirmation: '',
     })
 
     const [passwordType, setPasswordType] = useState("password");
     const [errorMessage, setErrorMessage] = useState("");
 
-    const { username, email, password, passwordConfirmation } = formData;
+    const { username, password } = formData;
 
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();

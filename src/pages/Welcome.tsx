@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import aot from '../assets/coverImage/aot4.jpg';
 import callofthenight from '../assets/coverImage/callofthenight.jpg';
@@ -32,20 +32,15 @@ function Welcome() {
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
 
-    const { user, isLoading, isError, isSuccess, message } = useSelector((state: RootState) => state.auth);
-    const [errorMessage, setErrorMessage] = useState("");
+    const { user, isSuccess, message } = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
-        if (isError) {
-            setErrorMessage(message);
-        }
-
         if (isSuccess || user) {
             navigate('/home');
         }
 
         dispatch(reset());
-    }, [isError, isSuccess, user, message, navigate, dispatch]);
+    }, [isSuccess, user, message, navigate, dispatch]);
 
     return (
         <div className="flex justify-center overflow-hidden h-[100vh] relative">

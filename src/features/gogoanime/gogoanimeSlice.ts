@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import gogoanimeService from './gogoanimeService';
 
+
+
+
 const initialState = {
     anime: <any>[],
     isError: false,
@@ -51,8 +54,6 @@ export const getAnimeEpisode = async (id: string) => {
         return message;
     }
 }
-
-
 
 export const gogoanimeSlice = createSlice({
     name: 'anime',

@@ -1,16 +1,17 @@
 import { useState } from 'react'
 import { MdMenu, MdSearch, MdClose, MdTune, MdArrowDropDown } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootState } from '../app/store';
 import useWindowDimensions from '../hooks/useWindowDimensions';
-
+import { getAnime, reset } from '../features/gogoanime/gogoSearchSlice';
 
 
 function TopBar() {
 
 
     const { user } = useSelector((state: RootState) => state.auth);
+    const { animeSearch, isLoading } = useSelector((state: RootState) => state.gogosearch);
 
     // console.log(user);
     const { width } = useWindowDimensions();
@@ -22,11 +23,24 @@ function TopBar() {
 
     const [search, setSearch] = useState('');
 
+    const dispatch = useDispatch<any>();
 
-    const onChange = (e: any) => {
+    const searchTitle = async (e: any) => {
         setSearch(() => (
             e.target.name = e.target.value
         ));
+        const title = e.target.value.replace(/ /g, '+').toLowerCase();
+        const url = {
+            title: title,
+            page: 1,
+        }
+        if (title.length >= 2) {
+            dispatch(getAnime(url));
+        }
+        else {
+            dispatch(reset());
+        }
+        // const searchResult = getAnime(url);
     }
 
     if (user) {
@@ -70,10 +84,46 @@ function TopBar() {
                                         <input
                                             type="text"
                                             placeholder="Search ..."
-                                            className="bg-base-200 opSearch input  flex items-center w-full h-full max-w-xs pl-10 border-none focus:border-none focus:outline-none text-neutral font-semibold placeholder:text-neutral-focus"
+                                            className="bg-base-200 opSearch input  flex items-center w-full h-full max-w-xs pl-10 border-none focus:border-none focus:outline-none text-neutral font-semibold placeholder:text-neutral-focus "
                                             onFocus={(e) => { setActiveSearch(!activeSearch) }} onBlur={(e) => { setActiveSearch(!activeSearch) }}
-                                            onChange={onChange}
-                                            value={search} />
+                                            onChange={searchTitle}
+                                            value={search}
+                                            autoFocus />
+                                        {/* {activeSearch ? */}
+                                        <div className="absolute w-full top-[50px] z-40 px-2 bg-neutral-focus rounded-md text-xs">
+                                            {isLoading ? "loading..." : ""}
+                                            {animeSearch.results && animeSearch.results.slice(0, 6).map((item: any) => (
+                                                <Link to={`/anime/${item.id}`} onClick={() => {
+                                                    setSearch('');
+                                                    dispatch(reset());
+                                                    setOpenSearch(!openSearch);
+                                                }}>
+                                                    <div className="text-neutral p-2 flex">
+                                                        <div>
+                                                            <img src={item.image} alt="" className="w-[42px] rounded-sm" />
+                                                        </div>
+                                                        <div className="pl-3 pt-2">
+                                                            <div className="font-semibold text-white">
+                                                                {item.title}
+                                                            </div>
+                                                            <div>
+                                                                {item.releaseDate}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                            ))}
+                                            {animeSearch.results?.length > 6 &&
+                                                <Link to="/discover">
+                                                    <div className="text-primary">
+                                                        More Results &#62;&#62;
+                                                    </div>
+                                                </Link>
+                                            }
+                                        </div>
+                                        {/* :
+                                            <div></div>
+                                        } */}
                                     </div>
                                 }
 
@@ -101,8 +151,9 @@ function TopBar() {
                                             placeholder="Search ..."
                                             className="bg-base-200 opSearch input  flex items-center w-full h-full pl-10 border-none focus:border-none focus:outline-none text-neutral font-semibold placeholder:text-neutral-focus"
                                             onFocus={(e) => { setActiveSearch(!activeSearch) }} onBlur={(e) => { setActiveSearch(!activeSearch) }}
-                                            onChange={onChange}
+                                            onChange={searchTitle}
                                             value={search} />
+
                                     </div>
                                     <Link to={'/discover'} className="flex rounded-lg bg-base-200 px-3 py-2.5 ml-7 ">
                                         <MdTune className="text-neutral" size="24px" />
@@ -127,6 +178,7 @@ function TopBar() {
                                                                 <MdArrowDropDown size="32px" />
                                                             </div>
                                                         </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,6 +189,8 @@ function TopBar() {
                             </div>
                         )
                 }
+
+
             </div>
         )
 

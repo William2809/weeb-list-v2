@@ -29,10 +29,14 @@ function Anime() {
         //set all eps into unactive and activate last episode
         data.episodes.forEach((item: any) => {
             item['active'] = false;
-            if (item.number === data.episodes[data.episodes.length - 1].number) {
+            if (lastUrl === "latest" && item.number === data.episodes[data.episodes.length - 1].number) {
                 item.active = true;
                 getEpisodeSource(item.id);
-                console.log(item.id);
+                // console.log(item.id);
+            }
+            else if (item.number === data.episodes[0].number) {
+                item.active = true;
+                getEpisodeSource(item.id);
             }
         })
 

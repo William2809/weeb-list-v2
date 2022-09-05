@@ -1,5 +1,6 @@
 import axios from "axios";
 import qs from "qs";
+import { Params } from "react-router-dom";
 const API_URL = process.env.REACT_APP_BACKEND_URL + '/api/gogoanime';
 
 //get latest anime
@@ -44,7 +45,24 @@ const getAnimeEpisode = async (token: string, id: string) => {
     return response.data;
 }
 
+//get anime by title
+const getAnime = async (token: string, url: any) => {
+    const { title, page } = url;
+    const config =
+    {
+        method: 'get',
+        url: API_URL + '/search/' + '?title=' + title + '&page=' + page,
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    }
+    console.log(config.url);
+    const response = await axios(config);
+    return response.data;
+}
+
 const gogoanimeService = {
+    getAnime,
     getLatest,
     getAnimeInfo,
     getAnimeEpisode,
