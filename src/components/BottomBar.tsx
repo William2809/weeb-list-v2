@@ -49,11 +49,11 @@ function BottomBar() {
 
 
     //measure width screen
-    const { width } = useWindowDimensions();
+    const { width, height } = useWindowDimensions();
     if (user) {
         return (
             <div>
-                {(width < 640) &&
+                {(width < 640 && height < 500) &&
                     <div className=" fixed bottom-0 z-20 px-2 h-[88px] bg-base-300 w-full flex items-center">
                         <ul className="flex justify-between w-full">
                             {menus.map((menu, index) => (
