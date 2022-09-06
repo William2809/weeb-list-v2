@@ -5,7 +5,6 @@ import PrivateRoute from './components/PrivateRoute';
 import Home from './pages/Home';
 import Welcome from './pages/Welcome';
 import Watchlist from './pages/Watchlist';
-import Download from './pages/Download';
 import Discover from './pages/Discover';
 import Schedule from './pages/Schedule';
 import Setting from './pages/Setting';
@@ -41,10 +40,6 @@ function App() {
 
             <Route path='/watchlist' element={<PrivateRoute />}>
               <Route path='/watchlist' element={<Watchlist />} />
-            </Route>
-
-            <Route path='/download' element={<PrivateRoute />}>
-              <Route path='/download' element={<Download />} />
             </Route>
 
             <Route path='/setting' element={<PrivateRoute />}>

@@ -34,7 +34,7 @@ function Anime() {
                 getEpisodeSource(item.id);
                 // console.log(item.id);
             }
-            else if (item.number === data.episodes[0].number) {
+            else if (lastUrl !== "latest" && item.number === data.episodes[0].number) {
                 item.active = true;
                 getEpisodeSource(item.id);
             }

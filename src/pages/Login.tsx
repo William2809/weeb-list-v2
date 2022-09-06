@@ -96,24 +96,24 @@ function Login() {
                         </div>
 
                         <div className="pt-5 text-center">
-                            <p className="text-white lg:text-base text-sm lg:font-medium font-normal">Already have an account?
+                            <p className="text-white text-sm lg:text-base font-normal lg:font-medium ">Already have an account?
                                 <Link to={'/sign-up'} className="text-primary text- underline"> Sign Up here</Link>
                                 .</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="lg:w-[520px] w-[400px] lg:mt-0 mt-6">
+                <div className="w-[320px] xs:w-[400px] lg:w-[520px] mt-6 lg:mt-0 ">
                     <form onSubmit={onSubmit}>
                         <div>
                             <div className="lg:mb-4 mb-2">
                                 <p className="text-neutral font-semibold mb-1 text-base">Username</p>
-                                <input type="text" name="username" id="username" value={username} onChange={onChange} placeholder="Enter your username/email" className="input input-bordered rounded-xl bg-neutral-focus w-full placeholder:font-medium lg:h-14 h-10" required />
+                                <input type="text" name="username" id="username" value={username} onChange={onChange} placeholder="Enter your username/email" className="input input-bordered  rounded-lg xs:rounded-xl bg-neutral-focus w-full placeholder:font-medium lg:h-14 h-10" required />
                             </div>
                             <div className="lg:mb-4 mb-2">
                                 <p className="text-neutral font-semibold mb-1 text-base">password</p>
                                 <div className="relative flex items-center">
-                                    <input type={passwordType} name="password" id="password" value={password} onChange={onChange} placeholder="Enter your password" className="input input-bordered rounded-xl bg-neutral-focus w-full placeholder:font-medium lg:h-14 h-10" required />
+                                    <input type={passwordType} name="password" id="password" value={password} onChange={onChange} placeholder="Enter your password" className="input input-bordered  rounded-lg xs:rounded-xl bg-neutral-focus w-full placeholder:font-medium lg:h-14 h-10" required />
                                     {
                                         <span onClick={togglePassword}>
                                             {passwordType === "password" ? <MdVisibilityOff className=" absolute transform -translate-y-1/2 right-5" size={18} /> : <MdVisibility className="absolute transform -translate-y-1/2 right-5" size={18} />}
@@ -131,8 +131,9 @@ function Login() {
                             </div>
                         </div> : null}
 
+                        {/* Sign in Button */}
                         <div className="flex flex-col gap-2.5 mt-8 lg:mt-10">
-                            <button type="submit" className="rounded-xl bg-primary hover:bg-primary-focus w-full lg:h-14 h-10 font-semibold text-white text-base">Sign In</button>
+                            <button type="submit" className="rounded-lg xs:rounded-xl bg-primary hover:bg-primary-focus w-full lg:h-14 h-10 font-semibold text-white text-base">Sign In</button>
                             <div className="flex justify-between items-center text-neutral font-semibold">
                                 <svg className='stroke-neutral' width="232" height="1" viewBox="0 0 232 1" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <line y1="0.5" x2="232" y2="0.5" />
@@ -145,6 +146,8 @@ function Login() {
                                     <line y1="0.5" x2="232" y2="0.5" />
                                 </svg>
                             </div>
+
+                            {/* Google sign in */}
                             <div className='rounded-xl bg-white flex justify-center items-center hover:bg-neutral-focus hover:text-white w-full lg:h-14 h-10 font-medium text-neutral-focus text-base gap-2'>
                                 {!user &&
                                     <Google.GoogleAuth></Google.GoogleAuth>

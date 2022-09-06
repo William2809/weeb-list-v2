@@ -56,7 +56,6 @@ const getAnime = async (token: string, url: any) => {
             Authorization: `Bearer ${token}`,
         },
     }
-    console.log(config.url);
     const response = await axios(config);
     return response.data;
 }

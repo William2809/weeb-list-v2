@@ -25,6 +25,7 @@ import { MdArrowForward } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 import { reset } from '../features/auth/authSlice';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 
 function Welcome() {
@@ -41,6 +42,8 @@ function Welcome() {
 
         dispatch(reset());
     }, [isSuccess, user, message, navigate, dispatch]);
+
+    const { width } = useWindowDimensions();
 
     return (
         <div className="flex justify-center overflow-hidden h-[100vh] relative">
@@ -66,7 +69,7 @@ function Welcome() {
                                     </svg>
                                 </div>
 
-                                <div className="font-mont text-[40px] lg:text-[64px]  font-bold flex gap-2">
+                                <div className="font-mont text-[36px] xs:text-[40px] lg:text-[64px]  font-bold flex gap-2">
                                     <h2 className="text-white ">Weeb</h2>
                                     <div className="text-primary">List</div>
                                 </div>
@@ -76,7 +79,7 @@ function Welcome() {
                             </div>
                             <div className="flex justify-center mt-5">
                                 <Link to="/sign-in">
-                                    <button className="flex items-center btn-secondary rounded-xl font-semibold  text-white text-[32px] px-6 py-2">Get Started <MdArrowForward size="48px" className='pl-2' /> </button>
+                                    <button className="flex items-center btn-secondary rounded-xl font-semibold  text-white text-[24px] xs:text-[32px] px-4 xs:px-6 xs:py-2">Get Started <MdArrowForward size={`${width < 500 ? "40px" : "48px"}`} className='pl-2' /> </button>
                                 </Link>
                             </div>
                         </div>

@@ -72,11 +72,11 @@ function Home() {
     }
 
     return (
-        <div className="w-full px-5">
+        <div className="w-full px-2">
             {/* Top banner */}
             <div className="w-full flex">
-                <div className='w-full bg-neutral h-[200px] mt-3 rounded-xl'>
-
+                <div className='w-full bg-neutral h-[200px] mt-3 rounded-xl text-black text-center'>
+                    Coming Soon
                 </div>
             </div>
             {/* content */}
@@ -90,9 +90,6 @@ function Home() {
                         Popular
                     </div>
                     <div onClick={() => currTab(3)} className={`flex justify-center items-center rounded-lg w-[110px] h-[32px]  text-white font-semibold text-[14px] ${tabActive(3) ? "bg-primary" : ""} hover:bg-primary cursor-pointer`}>
-                        Movie
-                    </div>
-                    <div onClick={() => currTab(4)} className={`flex justify-center items-center rounded-lg w-[110px] h-[32px]  text-white font-semibold text-[14px] ${tabActive(4) ? "bg-primary" : ""} hover:bg-primary cursor-pointer`}>
                         Movie
                     </div>
                 </div>

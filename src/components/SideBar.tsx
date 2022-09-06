@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MdMenu, MdHome, MdEvent, MdExplore, MdVideoLibrary, MdSystemUpdateAlt, MdSettings, MdLogout } from 'react-icons/md';
+import { MdMenu, MdHome, MdEvent, MdExplore, MdVideoLibrary, MdSettings, MdLogout } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { RootState } from '../app/store';
@@ -19,22 +19,20 @@ function SideBar({ children }: any) {
     const { height, width } = useWindowDimensions();
 
     //function for navbar icon
-    const homeIcon = () => { return <MdHome size="32px" className="mx-2.5" /> }
-    const scheduleIcon = () => { return <MdEvent size="32px" className="mx-2.5" /> }
-    const discoverIcon = () => { return <MdExplore size="32px" className="mx-2.5" /> }
-    const watclistIcon = () => { return <MdVideoLibrary size="32px" className="mx-2.5" /> }
-    const downloadIcon = () => { return <MdSystemUpdateAlt size="32px" className="mx-2.5" /> }
-    const settingIcon = () => { return <MdSettings size="32px" className="mx-2.5" /> }
-    const logoutIcon = () => { return <MdLogout size="32px" className="mx-2.5" /> }
+    const homeIcon = () => { return <MdHome size={height < 500 ? "28px" : "32px"} className="mx-2.5" /> }
+    const scheduleIcon = () => { return <MdEvent size={height < 500 ? "28px" : "32px"} className="mx-2.5" /> }
+    const discoverIcon = () => { return <MdExplore size={height < 500 ? "28px" : "32px"} className="mx-2.5" /> }
+    const watclistIcon = () => { return <MdVideoLibrary size={height < 500 ? "28px" : "32px"} className="mx-2.5" /> }
+    const settingIcon = () => { return <MdSettings size={height < 500 ? "28px" : "32px"} className="mx-2.5" /> }
+    const logoutIcon = () => { return <MdLogout size={height < 500 ? "28px" : "32px"} className="mx-2.5" /> }
 
-    const Components = [homeIcon(), scheduleIcon(), discoverIcon(), watclistIcon(), downloadIcon(), settingIcon(), logoutIcon()];
+    const Components = [homeIcon(), scheduleIcon(), discoverIcon(), watclistIcon(), settingIcon(), logoutIcon()];
     //key word for navbar
     const menus = [
         { title: "Home", destination: "/home" },
         { title: "Schedule", destination: "/schedule" },
         { title: "Discover", destination: "/discover" },
         { title: "Watchlist", destination: "/watchlist" },
-        { title: "Download", destination: "/download" },
         { title: "Setting", destination: "/setting", gap: true },
         { title: "Logout", },
     ]
@@ -54,17 +52,15 @@ function SideBar({ children }: any) {
         else if (index === 3 && (window.location.pathname === "/watchlist")) {
             return true;
         }
-        else if (index === 4 && (window.location.pathname === "/download")) {
+        else if (index === 4 && (window.location.pathname === "/setting")) {
             return true;
         }
-        else if (index === 5 && (window.location.pathname === "/setting")) {
-            return true;
-        }
+        return false;
     }
 
     //log out user
     const onLogout = () => {
-        navigate('/sign-in');
+        navigate('/');
         dispatch(logout());
         dispatch(reset());
     }
@@ -73,7 +69,7 @@ function SideBar({ children }: any) {
     return (
         <div className={`flex overflow-clip scrollbar-thin ${user ? "" : "hidden"}`}>
             {
-                width >= 640 &&
+                (width >= 640 && height >= 500) &&
                 (<div className={`${open ? "w-[332px]" : "w-[92px]"} duration-200 h-screen bg-base-300 pt-7 px-5 sticky top-0`}>
                     <div className='flex gap-x-2 items-center'>
                         <MdMenu size="32px" className={`mx-2.5 cursor-pointer duration-300 absolute ${open && "rotate-[270deg]"}`} onClick={() => setOpen(!open)} />
@@ -93,7 +89,7 @@ function SideBar({ children }: any) {
                     <div className="h-[calc(100vh-76px)] pt-8 flex flex-col justify-between">
                         <ul className="flex flex-col">
                             {menus.map((menu, index) => (
-                                (index < 5) &&
+                                (index < 4) &&
                                 (<Link key={index} to={`${index !== (menus.length - 1) ? menu.destination : ''}`}>
                                     <li className={` font-semibold text-xl rounded-md flex items-center gap-x-5  cursor-pointer h-[52px] hover:bg-secondary hover:text-white ${menu.gap ? "mt-3 bottom-0" : "mt-3"} ${activeNav(index) ? ("bg-secondary text-white") : "text-neutral-focus"}`} onClick={(index === (menus.length - 1) ? onLogout : undefined)}>
                                         <div className="">
@@ -108,7 +104,7 @@ function SideBar({ children }: any) {
                         </ul>
                         <ul className="flex flex-col pb-8">
                             {menus.map((menu, index) => (
-                                (index >= 5) &&
+                                (index >= 4) &&
                                 (<Link key={index} to={`${index !== (menus.length - 1) ? menu.destination : ''}`}>
                                     <li className={` font-semibold text-xl rounded-md flex items-center gap-x-5  cursor-pointer h-[52px] hover:bg-secondary hover:text-white ${menu.gap ? "mt-3 bottom-0" : "mt-3"} ${activeNav(index) ? ("bg-secondary text-white") : "text-neutral-focus"}`} onClick={(index === (menus.length - 1) ? onLogout : undefined)}>
                                         <div className="">
@@ -122,6 +118,26 @@ function SideBar({ children }: any) {
                             ))}
                         </ul>
                     </div>
+                </div >)
+            }
+            {
+                (height < 500) &&
+                (<div className=" h-screen bg-base-300 px-2 pt-2 sticky top-0 ">
+                    <ul className="flex flex-col h-screen justify-center">
+                        {menus.map((menu, index) => (
+                            (index < 5) &&
+                            (<Link key={index} to={`${index !== (menus.length - 1) ? menu.destination : ''}`}>
+                                <li className={` font-semibold text-xl rounded-md flex items-center gap-x-5  cursor-pointer h-[40px] hover:bg-secondary hover:text-white my-2 ${activeNav(index) ? ("bg-secondary text-white") : "text-neutral-focus"}`} onClick={(index === (menus.length - 1) ? onLogout : undefined)}>
+                                    <div className="">
+                                        {Components[index]}
+                                    </div>
+                                    <span className={`${!open && 'hidden'} origin-left duration-200`}>
+                                        {menu.title}
+                                    </span>
+                                </li>
+                            </Link>)
+                        ))}
+                    </ul>
                 </div >)
             }
             <div className="flex-grow">

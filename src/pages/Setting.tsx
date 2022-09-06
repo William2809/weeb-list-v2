@@ -21,9 +21,9 @@ function Setting() {
 
 
     const onLogout = () => {
+        navigate('/');
         dispatch(logout());
         dispatch(reset());
-        navigate('/sign-in');
     }
 
     return (

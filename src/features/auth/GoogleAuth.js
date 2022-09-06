@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import jwt_decode from 'jwt-decode';
 import { googleSignIn } from './authSlice';
 import { useDispatch } from 'react-redux';
-
+import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 
 const loadScript = (src) =>
@@ -17,7 +17,19 @@ const loadScript = (src) =>
     });
 
 const GoogleAuth = () => {
+    const { width } = useWindowDimensions();
 
+    const widthSize = () => {
+        if (width <= 475) {
+            return "320px";
+        }
+        else if (width <= 1024) {
+            return "400px";
+        }
+        else {
+            return "520px";
+        }
+    };
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -32,7 +44,7 @@ const GoogleAuth = () => {
                 });
                 google.accounts.id.renderButton(
                     document.getElementById("buttonDiv"),
-                    { shape: "", theme: "outline", size: "large", width: "450px", text: "signup_with" }
+                    { shape: "", theme: "", size: "large", width: widthSize(), text: "signup_with" }
                 );
                 google.accounts.id.prompt();
 

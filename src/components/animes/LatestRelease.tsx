@@ -37,9 +37,9 @@ function LatestRelease() {
     }
     return (
         <div className="pb-[100px]">
-            <div className=" mt-4 flex gap-4 flex-wrap justify-evenly">
+            <div className=" mt-4 flex gap-2 xs:gap-4 flex-wrap justify-evenly">
                 {animes && animes.map((anime: any) => (
-                    <AnimeItem key={anime.id} anime={anime} />
+                    <AnimeItem key={anime.id + anime.episodeNumber} anime={anime} />
                 ))}
             </div>
 

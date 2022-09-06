@@ -1,5 +1,5 @@
 import React from 'react'
-import { MdHome, MdEvent, MdExplore, MdVideoLibrary, MdSystemUpdateAlt, MdSettings } from 'react-icons/md'
+import { MdHome, MdEvent, MdExplore, MdVideoLibrary, MdSettings } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import useWindowDimensions from '../hooks/useWindowDimensions'
 import { useSelector } from 'react-redux';
@@ -14,10 +14,9 @@ function BottomBar() {
     const scheduleIcon = () => { return <MdEvent size="32px" className="mx-2.5" /> }
     const discoverIcon = () => { return <MdExplore size="32px" className="mx-2.5" /> }
     const watclistIcon = () => { return <MdVideoLibrary size="32px" className="mx-2.5" /> }
-    const downloadIcon = () => { return <MdSystemUpdateAlt size="32px" className="mx-2.5" /> }
     const settingIcon = () => { return <MdSettings size="32px" className="mx-2.5" /> }
 
-    const Components = [homeIcon(), scheduleIcon(), discoverIcon(), watclistIcon(), downloadIcon(), settingIcon()];
+    const Components = [homeIcon(), scheduleIcon(), discoverIcon(), watclistIcon(), settingIcon()];
 
     //key word for navbar
     const menus = [
@@ -25,7 +24,6 @@ function BottomBar() {
         { title: "Schedule", destination: "/schedule" },
         { title: "Discover", destination: "/discover" },
         { title: "Watchlist", destination: "/watchlist" },
-        { title: "Download", destination: "/download" },
         { title: "Setting", destination: "/setting" },
     ]
 
@@ -43,12 +41,10 @@ function BottomBar() {
         else if (index === 3 && (window.location.pathname === "/watchlist")) {
             return true;
         }
-        else if (index === 4 && (window.location.pathname === "/download")) {
+        else if (index === 4 && (window.location.pathname === "/setting")) {
             return true;
         }
-        else if (index === 5 && (window.location.pathname === "/setting")) {
-            return true;
-        }
+        return false;
     }
 
 
@@ -58,7 +54,7 @@ function BottomBar() {
         return (
             <div>
                 {(width < 640) &&
-                    <div className=" fixed bottom-0 z-20 px-5 h-[88px] bg-base-300 w-full flex items-center">
+                    <div className=" fixed bottom-0 z-20 px-2 h-[88px] bg-base-300 w-full flex items-center">
                         <ul className="flex justify-between w-full">
                             {menus.map((menu, index) => (
                                 <Link key={index} to={`${index !== (menus.length) ? menu.destination : ''}`}>
