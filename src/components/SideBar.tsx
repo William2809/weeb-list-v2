@@ -121,9 +121,9 @@ function SideBar({ children }: any) {
                 </div >)
             }
             {
-                (height < 500) &&
-                (<div className=" h-screen bg-base-300 px-2 pt-2 sticky top-0 ">
-                    <ul className="flex flex-col h-screen justify-center">
+                (height < 500 && width >= 500) &&
+                (<div className=" h-screen bg-base-300 px-2 pt-3 sticky top-0 ">
+                    <ul className="flex flex-col h-screen ">
                         {menus.map((menu, index) => (
                             (index < 5) &&
                             (<Link key={index} to={`${index !== (menus.length - 1) ? menu.destination : ''}`}>
