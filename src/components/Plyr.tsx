@@ -1,7 +1,6 @@
 import Hls from "hls.js";
-import PlyrJS, { Options, PlyrEvent as PlyrJSEvent, SourceInfo } from "plyr";
+import PlyrJS, { Options, PlyrEvent as PlyrJSEvent } from "plyr";
 import React, { HTMLProps, MutableRefObject, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
 import "plyr/dist/plyr.css";
 
 export type PlyrInstance = PlyrJS;
@@ -92,7 +91,7 @@ export const Plyr = React.forwardRef<HTMLPlyrVideoElement, PlyrProps>(
         return (
             <video
                 ref={innerRef as unknown as MutableRefObject<HTMLVideoElement>}
-                className="plyr-react plyr"
+                className="plyr-react plyr w-screen"
                 {...rest}
             />
         );

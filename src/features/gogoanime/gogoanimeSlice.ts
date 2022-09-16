@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import gogoanimeService from './gogoanimeService';
 
-
-
-
 const initialState = {
     anime: <any>[],
     isError: false,

@@ -54,7 +54,10 @@ function BottomBar() {
         return (
             <div>
                 {(width < 640 && height > 450) &&
-                    <div className=" fixed bottom-0 z-20 px-2 h-[88px] bg-base-300 w-full flex items-center">
+                    <div className=" fixed bottom-0 z-20 px-2 h-[88px] bg-base-300 w-full flex flex-col items-center">
+                        <div>
+                            search bar... (Coming soon)
+                        </div>
                         <ul className="flex justify-between w-full">
                             {menus.map((menu, index) => (
                                 <Link key={index} to={`${index !== (menus.length) ? menu.destination : ''}`}>
