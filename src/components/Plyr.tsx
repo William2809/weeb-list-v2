@@ -62,7 +62,7 @@ export const Plyr = React.forwardRef<HTMLPlyrVideoElement, PlyrProps>(
 
             if (Hls.isSupported()) {
                 hls.current.loadSource(source!);
-                // hls.current.loadSource(source ? source!);
+                // hls.current.loadSource(source ? source! : source!);
                 hls.current.attachMedia(innerRef.current as HTMLMediaElement);
             } else {
                 createPlayer();
@@ -91,7 +91,7 @@ export const Plyr = React.forwardRef<HTMLPlyrVideoElement, PlyrProps>(
         return (
             <video
                 ref={innerRef as unknown as MutableRefObject<HTMLVideoElement>}
-                className="plyr-react plyr w-screen"
+                className="plyr-react plyr w-full"
                 {...rest}
             />
         );

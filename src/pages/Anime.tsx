@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 
 import { useCountdown } from '../hooks/useCountdown';
+import { useRef } from 'react';
 
 function Anime() {
 
@@ -19,7 +20,7 @@ function Anime() {
     const [genres, setGenres]: any = useState(null);
     const [nextEpisode, setNextEpisode]: any = useState(0);
 
-    const [days, hours, minutes, seconds]: any = useCountdown(nextEpisode);
+    // const [days, hours, minutes, seconds]: any = useCountdown(nextEpisode);
 
     //url 
     const url = window.location.pathname;
@@ -56,6 +57,7 @@ function Anime() {
 
     const getEpisodeSource = async (episodeId: string) => {
         const eps = await getAnimeEpisode(episodeId);
+        console.log(eps);
         setEpisodes(eps);
     }
 
@@ -125,7 +127,8 @@ function Anime() {
                                     <p className="pt-1">Load Player</p>
                                 </div>)
                             }
-                            {loadPlayer && episodes && <Plyr source={episodes.sources[0].url}></Plyr>}
+                            {/* {episodes && episodes.sources[0].url} */}
+                            {loadPlayer && episodes && <Plyr source={episodes.sources[0].url} />}
                         </div>
 
                         {!animeDesc && gogoInfo.length !== 0 &&
@@ -138,7 +141,7 @@ function Anime() {
                                         {gogoInfo.status} | {gogoInfo.subOrDub} | {gogoInfo.totalEpisodes} Eps
                                     </div>
                                     <div>
-                                        {days > 0 && `${days}d`} {hours > 0 && `${hours}h`} {minutes && `${minutes}m`} {(days > 0 || hours > 0 || minutes > 0 || seconds > 0) && `${seconds}s`}
+                                        {/* {days > 0 && `${days}d`} {hours > 0 && `${hours}h`} {minutes && `${minutes}m`} {(days > 0 || hours > 0 || minutes > 0 || seconds > 0) && `${seconds}s`} */}
                                     </div>
                                 </div>
                                 <div className="flex gap-2 pt-2 flex-wrap">
@@ -177,7 +180,7 @@ function Anime() {
                                             </div>
                                             {animeDetail[1].nextAiringEpisode !== undefined &&
                                                 <div className="mt-1 text-xs">
-                                                    <span className="text-primary">Next: </span> {days > 0 && `${days}d`} {hours > 0 && `${hours}h`} {minutes && `${minutes}m`} {(days > 0 || hours > 0 || minutes > 0 || seconds > 0) && `${seconds}s`}
+                                                    {/* <span className="text-primary">Next: </span> {days > 0 && `${days}d`} {hours > 0 && `${hours}h`} {minutes && `${minutes}m`} {(days > 0 || hours > 0 || minutes > 0 || seconds > 0) && `${seconds}s`} */}
                                                 </div>
                                             }
                                         </div>
