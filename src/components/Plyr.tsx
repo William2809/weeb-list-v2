@@ -14,8 +14,7 @@ export type PlyrProps = HTMLProps<HTMLVideoElement> & {
 export interface HTMLPlyrVideoElement {
     plyr?: PlyrInstance;
 }
-
-export const Plyr = React.forwardRef<HTMLPlyrVideoElement, PlyrProps>(
+const Plyr = React.forwardRef<HTMLPlyrVideoElement, PlyrProps>(
     (props, ref) => {
         const { options = null, source, ...rest } = props;
         const innerRef = useRef<HTMLPlyrVideoElement>();
@@ -91,9 +90,12 @@ export const Plyr = React.forwardRef<HTMLPlyrVideoElement, PlyrProps>(
         return (
             <video
                 ref={innerRef as unknown as MutableRefObject<HTMLVideoElement>}
-                className="plyr-react plyr w-full"
+                className="plyr-react plyr"
+                object-fit="fill"
                 {...rest}
             />
         );
     }
 );
+
+export default React.memo(Plyr)
