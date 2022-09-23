@@ -14,7 +14,7 @@ function TopBar() {
     const { animeSearch, isLoading, isSuccess } = useSelector((state: RootState) => state.gogosearch);
 
     // console.log(user);
-    const { width } = useWindowDimensions();
+    const { width, height } = useWindowDimensions();
     const [openNav, setOpenNav] = useState(false);
     const [openSearch, setOpenSearch] = useState(false);
     const [activeSearch, setActiveSearch] = useState(false);
@@ -66,7 +66,7 @@ function TopBar() {
         return (
             <div className="flex">
                 {
-                    (width < 640) ?
+                    (width < 640 || height < 500) ?
                         (
                             <div className="flex items-center justify-between px-5 w-screen bg-base-300 h-14">
                                 {/* logo */}

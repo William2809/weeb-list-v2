@@ -13,7 +13,7 @@ function AnimePlayer() {
     const [loadPlayer, setLoadPlayer]: any = useState(false);
     const [episodes, setEpisodes]: any = useState(null);
 
-    const { width } = useWindowDimensions();
+    const { width, height } = useWindowDimensions();
 
     //url 
     const url = window.location.pathname;
@@ -83,7 +83,7 @@ function AnimePlayer() {
 
     return (
         <div>
-            {(width < 640) &&
+            {(width < 640 || height < 500) &&
                 (<div>
                     <div>
                         <div className={`${loadPlayer ? "bg-base-100 w-screen min-h-min " : "bg-base-200 w-screen h-[240px]"} flex items-center justify-center`}>

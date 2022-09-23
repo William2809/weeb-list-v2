@@ -67,7 +67,7 @@ function SideBar({ children }: any) {
     { (width <= 1310 && open) && setOpen(!open) }
 
     return (
-        <div className={`flex overflow-clip scrollbar-thin ${user ? "" : "hidden"}`}>
+        <div className={`flex overflow-clip scrollbar-thin ${user ? "" : "hidden"} `}>
             {
                 (width >= 640 && height >= 500) &&
                 (<div className={`${open ? "w-[332px]" : "w-[92px]"} duration-200 h-screen bg-base-300 pt-7 px-5 sticky top-0`}>
@@ -121,8 +121,8 @@ function SideBar({ children }: any) {
                 </div >)
             }
             {
-                (height < 500 && width >= 500) &&
-                (<div className=" h-screen bg-base-300 px-2 pt-3 sticky top-0 ">
+                (height < 500 && width >= 640) &&
+                (<div className="h-screen bg-base-300 px-2 pt-3 sticky top-0 ">
                     <ul className="flex flex-col h-screen ">
                         {menus.map((menu, index) => (
                             (index < 5) &&
@@ -131,16 +131,13 @@ function SideBar({ children }: any) {
                                     <div className="">
                                         {Components[index]}
                                     </div>
-                                    <span className={`${!open && 'hidden'} origin-left duration-200`}>
-                                        {menu.title}
-                                    </span>
                                 </li>
                             </Link>)
                         ))}
                     </ul>
                 </div >)
             }
-            <div className="flex-grow">
+            <div className={`flex-grow w-[0px]`}>
                 <TopBar></TopBar>
 
                 {children}

@@ -12,7 +12,7 @@ function AnimeItem({ anime }: any) {
 
     return (
         <div>
-            <Link to={`/anime/${anime.id}/latest`}>
+            <a href={`/anime/${anime.id}/latest`}>
                 <div className="w-[114px] h-[228px] xs:w-[136px]  xs:h-[272px] bg-base-200 rounded-lg" key={anime.id}>
                     <img src={anime.image} alt="" className="w-full h-[160px] xs:h-[204px] rounded-t-lg" />
                     <p className="font-semibold text-white text-2xs xs:text-xs text-center my-1 px-1">
@@ -28,7 +28,7 @@ function AnimeItem({ anime }: any) {
                         </div>
                     </div>
                 </div>
-            </Link>
+            </a>
         </div>
     )
 }
