@@ -86,7 +86,7 @@ function AnimePlayer() {
             {(width < 640 || height < 500) &&
                 (<div>
                     <div>
-                        <div className={`${loadPlayer ? "bg-base-100 w-screen min-h-min " : "bg-base-200 w-screen h-[240px]"} flex items-center justify-center`}>
+                        <div className={`${loadPlayer ? "bg-base-100 w-full min-h-min " : "bg-base-200 w-full h-[240px]"} flex items-center justify-center`}>
                             {loadPlayer === false &&
                                 (<div className=" flex flex-col items-center">
                                     <MdPlayCircle size="48px" className="text-neutral active:text-primary" onClick={() => clickPlayButton()} />
