@@ -20,7 +20,6 @@ function TopBar() {
     const [activeSearch, setActiveSearch] = useState(false);
     const [openDropDown, setOpenDropDown] = useState(false);
 
-
     const [search, setSearch] = useState('');
     const [searchTab, setSearchTab] = useState(false);
 
@@ -34,33 +33,25 @@ function TopBar() {
         setOpenDropDown(false);
     }, [])
 
-    const searchTitle = async (e: any) => {
+    useEffect(() => {
+        var searchString = search;
 
-        setSearch(() => (
-            e.target.name = e.target.value
-        ));
-        console.log(e.target.value.length);
-        // if (e.target.value.length >= 2) {
+        const title = searchString.replace(/ /g, '+').toLowerCase();
 
-
-        const title = e.target.value.replace(/ /g, '+').toLowerCase();
         const url = {
             title: title,
             page: 1,
         }
-        if (title.length >= 2) {
-            dispatch(getAnime(url));
-        }
-        // }
+        console.log(search.length);
+        const timeOutId = setTimeout(() => dispatch(getAnime(url)), 500);
+        return () => clearTimeout(timeOutId);
+    }, [search])
 
-        // const searchResult = getAnime(url);
-    }
     useEffect(() => {
         if (search.length < 2 && isSuccess) {
             dispatch(reset());
         }
     }, [search, isSuccess])
-
 
     if (user) {
         return (
@@ -89,7 +80,7 @@ function TopBar() {
                                         <input
                                             type="text"
                                             placeholder="Search ..."
-                                            className="bg-base-200 opSearch input  flex items-center w-full h-full max-w-xs pl-10 border-none focus:border-none focus:outline-none text-neutral font-semibold placeholder:text-neutral-focus "
+                                            className="bg-base-200 opSearch input flex items-center w-full h-full pl-10 border-none focus:border-none focus:outline-none text-neutral font-semibold placeholder:text-neutral-focus "
                                             onFocus={(e) => {
                                                 setActiveSearch(!activeSearch);
                                                 setSearchTab(true);
@@ -99,7 +90,7 @@ function TopBar() {
                                                 setActiveSearch(!activeSearch);
                                                 console.log("here");
                                             }}
-                                            onChange={searchTitle}
+                                            onChange={(e) => setSearch(e.target.value)}
                                             value={search}
                                             autoFocus />
                                         {searchTab ?
@@ -130,7 +121,7 @@ function TopBar() {
                                                 ))}
                                                 {!isLoading && animeSearch.results?.length > 6 &&
                                                     <Link to="/discover">
-                                                        <div className="text-primary">
+                                                        <div className="text-primary px-2 py-1 my-2 rounded-md hover:bg-white">
                                                             More Results &#62;&#62;
                                                         </div>
                                                     </Link>
@@ -159,17 +150,57 @@ function TopBar() {
                         (
                             <div className="bg-base-300 h-[100px] flex-grow flex items-center ">
                                 <div className={`flex w-full justify-center ${width > 860 ? "mr-[50px]" : ""}`}>
-                                    <div className=" flex items-center h-11 lg:w-[438px] w-[280px]">
+                                    <div className="relative flex items-center h-11 lg:w-[438px] w-[280px]">
                                         <MdSearch className={`w-5 h-5 absolute ml-3 pointer-events-none ${activeSearch ? "text-neutral" : "text-neutral-focus"}`} />
                                         <input
                                             type="text"
                                             placeholder="Search ..."
                                             className="bg-base-200 opSearch input  flex items-center w-full h-full pl-10 border-none focus:border-none focus:outline-none text-neutral font-semibold placeholder:text-neutral-focus"
-                                            onFocus={(e) => { setActiveSearch(!activeSearch) }}
+                                            onFocus={(e) => {
+                                                setActiveSearch(!activeSearch);
+                                                setSearchTab(true);
+                                            }}
 
                                             onBlur={(e) => { setActiveSearch(!activeSearch) }}
-                                            onChange={searchTitle}
+                                            onChange={(e) => setSearch(e.target.value)}
                                             value={search} />
+                                        {searchTab ?
+                                            <div className="absolute w-full top-[50px] z-40 px-2 mt-1 bg-neutral-focus rounded-md text-xs"
+                                            >
+                                                {isLoading ? <div className="p-2 text-white">Loading...</div> : ""}
+                                                {!isLoading && animeSearch.results && animeSearch.results.slice(0, 6).map((item: any) => (
+                                                    <a href={`/anime/${item.id}`} key={item.id} className="" onClick={() => {
+                                                        setSearch('');
+                                                        dispatch(reset());
+                                                        setOpenSearch(!openSearch);
+                                                        setSearchTab(!searchTab);
+                                                    }}>
+                                                        <div className="text-neutral px-2 py-1 my-2 flex hover:bg-primary rounded-md" onClick={() => { setActiveSearch(true) }}>
+                                                            <div>
+                                                                <img src={item.image} alt="" className="w-[42px] rounded-sm" />
+                                                            </div>
+                                                            <div className="pl-3 pt-2">
+                                                                <div className="font-semibold text-white">
+                                                                    {item.title}
+                                                                </div>
+                                                                <div>
+                                                                    {item.releaseDate}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                ))}
+                                                {!isLoading && animeSearch.results?.length > 6 &&
+                                                    <Link to="/discover">
+                                                        <div className="text-primary px-2 py-1 my-2 rounded-md hover:bg-white">
+                                                            More Results &#62;&#62;
+                                                        </div>
+                                                    </Link>
+                                                }
+                                            </div>
+                                            :
+                                            <div></div>
+                                        }
 
                                     </div>
                                     <Link to={'/discover'} className="flex rounded-lg bg-base-200 px-3 py-2.5 ml-7 ">

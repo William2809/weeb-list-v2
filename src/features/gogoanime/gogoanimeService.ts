@@ -1,6 +1,4 @@
 import axios from "axios";
-import qs from "qs";
-import { Params } from "react-router-dom";
 const API_URL = process.env.REACT_APP_BACKEND_URL + '/api/gogoanime';
 
 //get latest anime

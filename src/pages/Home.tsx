@@ -5,6 +5,8 @@ import { RootState } from '../app/store';
 import { logout, reset } from '../features/auth/authSlice';
 
 import LatestRelease from '../components/animes/LatestRelease';
+import PopularAnime from '../components/animes/PopularAnime';
+import MovieAnime from '../components/animes/MovieAnime';
 
 function Home() {
 
@@ -97,6 +99,12 @@ function Home() {
             {/* movie list */}
             {
                 menu1 && <LatestRelease />
+            }
+            {
+                menu2 && <PopularAnime />
+            }
+            {
+                menu3 && <MovieAnime />
             }
 
 

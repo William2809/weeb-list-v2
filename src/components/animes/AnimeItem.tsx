@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 function AnimeItem({ anime }: any) {
