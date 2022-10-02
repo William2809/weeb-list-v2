@@ -189,7 +189,7 @@ function AnimeDetail() {
 
             {
                 //normal/landscape mode
-                (width > 640 || height > 500) &&
+                (width > 640 && height > 500) &&
                 (<div>
                     {animeDesc &&
                         (<div className="px-2.5 mt-2">
