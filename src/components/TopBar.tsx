@@ -42,7 +42,6 @@ function TopBar() {
             title: title,
             page: 1,
         }
-        console.log(search.length);
         const timeOutId = setTimeout(() => dispatch(getAnime(url)), 500);
         return () => clearTimeout(timeOutId);
     }, [search])

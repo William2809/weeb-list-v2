@@ -28,9 +28,7 @@ function AnimePlayer() {
     }
 
     //check any id mistakes
-    console.log(id);
     const correction = checkUrl(id);
-    console.log(correction);
     if (correction !== "-1") {
         id = correction;
     }
@@ -58,14 +56,7 @@ function AnimePlayer() {
 
     const getEpisodeSource = async (episodeId: string) => {
         const eps = await getAnimeEpisode(episodeId);
-        if (episodes === null) {
-            setEpisodes(eps);
-
-        }
-        else if (episodes.sources[0].url === eps.sources[0].url) {
-            // setEpisodes(eps);
-            console.log("supposedly not rendered");
-        }
+        setEpisodes(eps);
     }
     // active episode or current episodes
     const activeEpisode: any = (number: number) => {
