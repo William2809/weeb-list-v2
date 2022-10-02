@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom'
-import { RootState } from '../app/store';
+import { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
 import { logout, reset } from '../features/auth/authSlice';
 
 import LatestRelease from '../components/animes/LatestRelease';
@@ -13,12 +12,12 @@ function Home() {
     const navigate = useNavigate();
     const dispatch = useDispatch<any>();
 
-    const { user } = useSelector((state: RootState) => state.auth);
-
     const [menu1, setMenu1] = useState(true);
     const [menu2, setMenu2] = useState(false);
     const [menu3, setMenu3] = useState(false);
     const [menu4, setMenu4] = useState(false);
+
+
 
     const tabActive = (menu: number) => {
 
@@ -73,6 +72,8 @@ function Home() {
         navigate('/sign-in');
     }
 
+
+
     return (
         <div className="w-full px-2">
             {/* Top banner */}
@@ -96,6 +97,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+
             {/* movie list */}
             {
                 menu1 && <LatestRelease />

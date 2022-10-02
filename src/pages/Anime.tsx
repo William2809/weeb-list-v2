@@ -5,7 +5,6 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 
 
 function Anime() {
-    const { height, width } = useWindowDimensions();
 
     return (
         <div className={`flex flex-col`}>

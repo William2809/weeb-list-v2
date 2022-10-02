@@ -2,11 +2,13 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_BACKEND_URL + '/api/gogoanime';
 
 //get latest anime
-const getLatest = async (token: string, page: number) => {
+const getLatest = async (token: string, url: any) => {
+    const { page, type } = url;
+    console.log("page= " + page + " type= " + type)
     const config =
     {
         method: 'get',
-        url: API_URL + '/latest/' + page,
+        url: API_URL + '/latest/' + '?page=' + page + '&type=' + type,
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -17,7 +19,7 @@ const getLatest = async (token: string, page: number) => {
 
 //get anime episode
 const getAnimeInfo = async (token: string, id: string) => {
-    const config2 =
+    const config =
     {
         method: 'get',
         url: API_URL + '/animeinfo/' + id,
@@ -25,7 +27,7 @@ const getAnimeInfo = async (token: string, id: string) => {
             Authorization: `Bearer ${token}`,
         }
     }
-    const response = await axios(config2);
+    const response = await axios(config);
     return response.data;
 }
 

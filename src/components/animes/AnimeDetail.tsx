@@ -1,5 +1,4 @@
-import Plyr from 'plyr';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Countdown from 'react-countdown';
 import { MdStar, MdTagFaces, MdKeyboardArrowDown } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';

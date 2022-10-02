@@ -1,6 +1,6 @@
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 
-function AnimeItem({ anime }: any) {
+function AnimeItem({ anime, subOrDub }: any) {
 
     const { width } = useWindowDimensions();
 
@@ -8,7 +8,6 @@ function AnimeItem({ anime }: any) {
     const truncate = (str: string, max: number) => {
         return str.length > max ? str.substring(0, max) + " ..." : str;
     }
-
     return (
         <div>
             <a href={`/anime/${anime.id}/latest`}>
@@ -23,7 +22,7 @@ function AnimeItem({ anime }: any) {
                         </div>
 
                         <div className="px-1 bg-secondary rounded-[4px]">
-                            Sub
+                            {`${subOrDub === 1 ? "Sub" : "Dub"}`}
                         </div>
                     </div>
                 </div>
