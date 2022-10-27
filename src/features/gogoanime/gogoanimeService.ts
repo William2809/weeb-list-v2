@@ -60,6 +60,8 @@ const getAnime = async (token: string, url: any) => {
     return response.data;
 }
 
+//get episode sources
+
 const gogoanimeService = {
     getAnime,
     getLatest,

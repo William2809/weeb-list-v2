@@ -4,6 +4,8 @@ import { getAnimeEpisode, getAnimeInfo } from '../../features/gogoanime/gogoanim
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import Plyr from '../Plyr';
 import { checkUrl } from './idCornerCase';
+import Iframe from 'react-iframe';
+
 
 function AnimePlayer() {
 
@@ -13,6 +15,9 @@ function AnimePlayer() {
 
     const [loadPlayer, setLoadPlayer]: any = useState(false);
     const [episodes, setEpisodes]: any = useState(null);
+    const [external, setExternal]: any = useState(null);
+
+    const [externalActive, setExternalActive]: any = useState(false);
 
     const { width, height } = useWindowDimensions();
 
@@ -35,7 +40,7 @@ function AnimePlayer() {
 
     //function get episode from gogoanime
     const getEpisodeList = async () => {
-        var data = await getAnimeInfo(id)
+        var data = await getAnimeInfo(id);
         setGogoInfo(data);
         setGenres(data.genres);
         //set all eps into unactive and activate last episode
@@ -56,6 +61,8 @@ function AnimePlayer() {
 
     const getEpisodeSource = async (episodeId: string) => {
         const eps = await getAnimeEpisode(episodeId);
+        setExternal(eps.headers.Referer);
+        console.log(eps);
         setEpisodes(eps);
     }
     // active episode or current episodes
@@ -94,10 +101,13 @@ function AnimePlayer() {
                                 </div>)
                             }
                             <div>
-                                {loadPlayer && episodes && <Plyr source={episodes.sources[0].url} />}
+                                {!externalActive && loadPlayer && episodes && <Plyr source={episodes.sources[0].url} />}
+                                {/* {externalActive && } */}
                             </div>
                         </div>
-
+                        <div className={`${externalActive ? "" : "hidden"} `}>
+                            {external && <iframe className="w-full h-[360px]" src={external}></iframe>}
+                        </div>
                         {gogoInfo.length !== 0 &&
                             (<div className="px-2.5 pt-2">
                                 <div className="text-white font-bold text-2xl">
@@ -125,6 +135,17 @@ function AnimePlayer() {
                                     {episode.number}
                                 </div>
                             ))}
+                        </div>
+                        <div className="pl-2">
+                            {!externalActive &&
+                                <div className="py-2">
+                                    To download the episode, please switch to external player.
+                                </div>
+                            }
+                            <div>
+                                <button className="bg-secondary rounded-lg hover:bg-secondary-focus py-2 px-4 text-white" onClick={() => { setExternalActive(!externalActive); setLoadPlayer(true) }}>Switch to External</button>
+                            </div>
+
                         </div>
                     </div>
                 </div>)}
@@ -140,11 +161,13 @@ function AnimePlayer() {
                                     <p className="pt-1">Load Player</p>
                                 </div>)
                             }
-                            <div>
+                            <div className={`${externalActive ? "hidden" : ""}`}>
                                 {loadPlayer && episodes && <Plyr source={episodes.sources[0].url} />}
                             </div>
                         </div>
-
+                        <div className={`${externalActive ? "" : "hidden"} `}>
+                            {external && <iframe className="w-full md:h-[500px] lg:h-[700px] xl:h-[1080px]" src={external}></iframe>}
+                        </div>
                         {gogoInfo.length !== 0 &&
                             (<div className="px-2.5 pt-2">
                                 <div className="text-white font-bold text-2xl">
@@ -172,6 +195,18 @@ function AnimePlayer() {
                                     {episode.number}
                                 </div>
                             ))}
+                        </div>
+
+                        <div className="pl-2">
+                            {!externalActive &&
+                                <div className="py-2">
+                                    To download the episode, please switch to external player.
+                                </div>
+                            }
+                            <div>
+                                <button className="bg-secondary rounded-lg hover:bg-secondary-focus py-2 px-4 text-white" onClick={() => { setExternalActive(!externalActive); setLoadPlayer(true) }}>Switch to External</button>
+                            </div>
+
                         </div>
                     </div>
                 </div>)}

@@ -29,7 +29,6 @@ export const getAnimeInfo = async (id: string) => {
 
         const token = user.token;
         const result = await gogoanimeService.getAnimeInfo(token, id);
-        // console.log(result);
         return result;
     } catch (error: any) {
         const message: String = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
