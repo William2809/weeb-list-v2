@@ -20,7 +20,7 @@ const getMovie = async (token: string, page: number) => {
     const config =
     {
         method: 'get',
-        url: API_URL + 'anime-movies?=' + page,
+        url: API_URL + 'anime-movies?page=' + page,
         headers: {
             Authorization: `Bearer ${token}`,
         },

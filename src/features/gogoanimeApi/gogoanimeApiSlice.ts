@@ -13,6 +13,7 @@ const initialState = {
 export const getPopular = createAsyncThunk('gogoanimeApi/getPopular', async (page: number, thunkAPI) => {
     try {
         const token = (thunkAPI.getState() as any).auth.user.token;
+
         return await gogoanimeService.getPopular(token, page);
     } catch (error: any) {
         const message: String = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

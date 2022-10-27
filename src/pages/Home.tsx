@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { logout, reset } from '../features/auth/authSlice';
@@ -6,6 +6,7 @@ import { logout, reset } from '../features/auth/authSlice';
 import LatestRelease from '../components/animes/LatestRelease';
 import PopularAnime from '../components/animes/PopularAnime';
 import MovieAnime from '../components/animes/MovieAnime';
+import HomeSwiper from '../components/homes/HomeSwiper';
 
 function Home() {
 
@@ -73,41 +74,38 @@ function Home() {
     }
 
 
-
     return (
-        <div className="w-full px-2">
+        <div className="w-full">
             {/* Top banner */}
-            <div className="w-full flex">
-                <div className='w-full bg-neutral h-[200px] mt-3 rounded-xl text-black text-center'>
-                    Coming Soon
-                </div>
-            </div>
+            <HomeSwiper />
             {/* content */}
-            <div className='pt-4'>
-                {/* menu */}
-                <div className="flex justify-around items-center">
-                    <div onClick={() => currTab(1)} className={`flex justify-center items-center rounded-lg w-[110px] h-[32px]  text-white font-semibold text-[14px] ${tabActive(1) ? "bg-primary" : ""} hover:bg-primary cursor-pointer`}>
-                        Latest Release
-                    </div>
-                    <div onClick={() => currTab(2)} className={`flex justify-center items-center rounded-lg w-[110px] h-[32px]  text-white font-semibold text-[14px] ${tabActive(2) ? "bg-primary" : ""} hover:bg-primary cursor-pointer`}>
-                        Popular
-                    </div>
-                    <div onClick={() => currTab(3)} className={`flex justify-center items-center rounded-lg w-[110px] h-[32px]  text-white font-semibold text-[14px] ${tabActive(3) ? "bg-primary" : ""} hover:bg-primary cursor-pointer`}>
-                        Movie
+            <div className="px-2">
+                <div className='pt-4'>
+                    {/* menu */}
+                    <div className="flex justify-around items-center">
+                        <div onClick={() => currTab(1)} className={`flex justify-center items-center rounded-lg w-[110px] h-[32px]  text-white font-semibold text-[14px] ${tabActive(1) ? "bg-primary" : ""} hover:bg-primary cursor-pointer`}>
+                            Latest Release
+                        </div>
+                        <div onClick={() => currTab(2)} className={`flex justify-center items-center rounded-lg w-[110px] h-[32px]  text-white font-semibold text-[14px] ${tabActive(2) ? "bg-primary" : ""} hover:bg-primary cursor-pointer`}>
+                            Popular
+                        </div>
+                        <div onClick={() => currTab(3)} className={`flex justify-center items-center rounded-lg w-[110px] h-[32px]  text-white font-semibold text-[14px] ${tabActive(3) ? "bg-primary" : ""} hover:bg-primary cursor-pointer`}>
+                            Movie
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {/* movie list */}
-            {
-                menu1 && <LatestRelease />
-            }
-            {
-                menu2 && <PopularAnime />
-            }
-            {
-                menu3 && <MovieAnime />
-            }
+                {/* movie list */}
+                {
+                    menu1 && <LatestRelease />
+                }
+                {
+                    menu2 && <PopularAnime />
+                }
+                {
+                    menu3 && <MovieAnime />
+                }
+            </div>
 
 
         </div>

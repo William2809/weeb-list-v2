@@ -10,8 +10,13 @@ function PopularAnime() {
     const { anime, isLoading, isSuccess } = useSelector((state: RootState) => state.gogoanimeApi);
     const dispatch = useDispatch<any>();
 
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [animes, setAnimes]: any = useState([]);
+
+    useEffect(() => {
+        dispatch(reset());
+        setAnimes([]);
+    }, [])
 
     useEffect(() => {
         if (isSuccess) {
@@ -32,10 +37,7 @@ function PopularAnime() {
 
     const loadPage = () => {
         setPage(page + 1);
-        // setAnimes([...animes, ...anime]);
-        setAnimes([...anime]);
-        // dispatch(reset());
-        console.log(animes);
+        animes.push(...anime);
     }
     return (
         <div className="pb-[100px]">

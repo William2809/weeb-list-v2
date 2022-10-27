@@ -10,7 +10,7 @@ function LatestRelease() {
     const { anime, isLoading, isSuccess } = useSelector((state: RootState) => state.gogoanime);
     const dispatch = useDispatch<any>();
 
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [type, setType] = useState(1);
     const [animes, setAnimes]: any = useState([]);
 
@@ -40,7 +40,7 @@ function LatestRelease() {
 
     const loadPage = () => {
         setPage(page + 1);
-        setAnimes([...animes, ...anime.results]);
+        animes.push(...anime.results);
     }
 
     useEffect(() => {

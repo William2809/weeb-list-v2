@@ -14,6 +14,12 @@ function MovieAnime() {
     const [animes, setAnimes]: any = useState([]);
 
     useEffect(() => {
+        dispatch(reset());
+
+        setAnimes([]);
+    }, [])
+
+    useEffect(() => {
         if (isSuccess) {
             loadPage();
         }
@@ -28,17 +34,17 @@ function MovieAnime() {
 
     useEffect(() => {
         dispatch(getMovie(page));
+
     }, [dispatch, page]);
 
     const loadPage = () => {
         setPage(page + 1);
-        setAnimes([...animes, ...anime]);
-        console.log(animes);
+        animes.push(...anime);
     }
     return (
         <div className="pb-[100px]">
             <div className=" mt-4 flex gap-2 xs:gap-4 flex-wrap justify-evenly">
-                {animes && animes.map((anime: any) => (
+                {animes?.map((anime: any) => (
                     <AnimeItemGogoanimeApi key={anime.id} anime={anime} />
                 ))}
             </div>

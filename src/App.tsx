@@ -11,6 +11,8 @@ import Setting from './pages/Setting';
 import SideBar from './components/SideBar';
 import Anime from './pages/Anime';
 
+import Carousel from './components/homes/carousels/Carousel';
+
 function App() {
 
   return (
@@ -21,6 +23,7 @@ function App() {
           <Route path='/' element={<Welcome />} />
           <Route path='/sign-up' element={<Register />}></Route>
           <Route path='/sign-in' element={<Login />}></Route>
+          <Route path='/test' element={<Carousel />}></Route>
         </Routes>
 
         {/* private */}
