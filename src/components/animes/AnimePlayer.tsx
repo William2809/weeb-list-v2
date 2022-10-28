@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { MdPlayCircle } from 'react-icons/md';
-import { getAnimeEpisode, getAnimeInfo } from '../../features/gogoanime/gogoanimeSlice';
+import { getAnimeEpisodeGogo, getAnimeInfo } from '../../features/gogoanime/gogoanimeSlice';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import Plyr from '../Plyr';
 import { checkUrl } from './idCornerCase';
-import Iframe from 'react-iframe';
-
+import { getAnimeEpisodeAnimix } from '../../features/animix/animixSlice';
 
 function AnimePlayer() {
 
@@ -18,6 +17,8 @@ function AnimePlayer() {
     const [external, setExternal]: any = useState(null);
 
     const [externalActive, setExternalActive]: any = useState(false);
+
+    const [activeSource, setActiveSource]: any = useState("gogo");
 
     const { width, height } = useWindowDimensions();
 
@@ -60,10 +61,12 @@ function AnimePlayer() {
     }
 
     const getEpisodeSource = async (episodeId: string) => {
-        const eps = await getAnimeEpisode(episodeId);
-        setExternal(eps.headers.Referer);
-        console.log(eps);
-        setEpisodes(eps);
+        const epsGogo = await getAnimeEpisodeGogo(episodeId);
+        const epsAnimix = await getAnimeEpisodeAnimix(episodeId);
+        setExternal(epsGogo.headers.Referer);
+        console.log(epsGogo);
+        console.log(epsAnimix);
+        setEpisodes([epsGogo, epsAnimix]);
     }
     // active episode or current episodes
     const activeEpisode: any = (number: number) => {
@@ -101,13 +104,14 @@ function AnimePlayer() {
                                 </div>)
                             }
                             <div>
-                                {!externalActive && loadPlayer && episodes && <Plyr source={episodes.sources[0].url} />}
+                                {!externalActive && loadPlayer && episodes && <Plyr source={`${activeSource === "gogo" ? episodes[0].sources[0].url : episodes[1].sources[0].file}`} />}
                                 {/* {externalActive && } */}
                             </div>
                         </div>
-                        <div className={`${externalActive ? "" : "hidden"} `}>
+                        {/* external player */}
+                        {/* <div className={`${externalActive ? "" : "hidden"} `}>
                             {external && <iframe className="w-full h-[360px]" src={external}></iframe>}
-                        </div>
+                        </div> */}
                         {gogoInfo.length !== 0 &&
                             (<div className="px-2.5 pt-2">
                                 <div className="text-white font-bold text-2xl">
@@ -128,8 +132,17 @@ function AnimePlayer() {
                             </div>)
                         }
 
-                        <div className="mt-4 flex flex-wrap gap-[6px] px-2.5  overflow-y-auto h-[76px]">
+                        <div className="mt-4 px-2 flex items-center">
+                            <div className="text-lg font-medium">
+                                Episode Sources
+                            </div>
+                            <div className="pl-2 flex gap-3">
+                                <button className={` ${activeSource === "gogo" ? "bg-secondary-focus" : "bg-secondary"} text-white hover:bg-secondary-focus rounded-lg py-2 px-4`} onClick={() => { setActiveSource("gogo") }}>Gogoanime</button>
+                                <button className={`${activeSource === "animix" ? "bg-secondary-focus" : "bg-secondary"} text-white hover:bg-secondary-focus rounded-lg py-2 px-4`} onClick={() => { setActiveSource("animix") }}>Animix</button>
 
+                            </div>
+                        </div>
+                        <div className="mt-4 flex flex-wrap gap-[6px] px-2.5  overflow-y-auto h-[76px]">
                             {episodeLists && episodeLists.map((episode: any) => (
                                 <div key={episode.id} className={`w-[54px] h-[30px]  text-white font-semibold text-lg flex items-center justify-center rounded-md cursor-pointer  ${episode.active ? 'bg-secondary-focus' : 'bg-secondary'}`} onClick={() => activeEpisode(episode.number)} >
                                     {episode.number}
@@ -161,13 +174,15 @@ function AnimePlayer() {
                                     <p className="pt-1">Load Player</p>
                                 </div>)
                             }
-                            <div className={`${externalActive ? "hidden" : ""}`}>
-                                {loadPlayer && episodes && <Plyr source={episodes.sources[0].url} />}
+                            <div>
+                                {!externalActive && loadPlayer && episodes && <Plyr source={`${activeSource === "gogo" ? episodes[0].sources[0].url : episodes[1].sources[0].file}`} />}
+                                {/* {externalActive && } */}
                             </div>
                         </div>
-                        <div className={`${externalActive ? "" : "hidden"} `}>
+                        {/* external player */}
+                        {/* <div className={`${externalActive ? "" : "hidden"} `}>
                             {external && <iframe className="w-full md:h-[500px] lg:h-[700px] xl:h-[1080px]" src={external}></iframe>}
-                        </div>
+                        </div> */}
                         {gogoInfo.length !== 0 &&
                             (<div className="px-2.5 pt-2">
                                 <div className="text-white font-bold text-2xl">
@@ -187,6 +202,17 @@ function AnimePlayer() {
                                 </div>
                             </div>)
                         }
+
+                        <div className="mt-4 px-2 flex items-center">
+                            <div className="text-lg font-medium">
+                                Episode Sources
+                            </div>
+                            <div className="pl-2 flex gap-3">
+                                <button className={` ${activeSource === "gogo" ? "bg-secondary-focus" : "bg-secondary"} text-white hover:bg-secondary-focus rounded-lg py-2 px-4`} onClick={() => { setActiveSource("gogo") }}>Gogoanime</button>
+                                <button className={`${activeSource === "animix" ? "bg-secondary-focus" : "bg-secondary"} text-white hover:bg-secondary-focus rounded-lg py-2 px-4`} onClick={() => { setActiveSource("animix") }}>Animix</button>
+
+                            </div>
+                        </div>
 
                         <div className="mt-4 flex flex-wrap gap-[6px] px-2.5  overflow-y-auto h-[76px]">
 

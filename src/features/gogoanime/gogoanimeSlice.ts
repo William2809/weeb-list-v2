@@ -38,7 +38,7 @@ export const getAnimeInfo = async (id: string) => {
 }
 
 // get anime episode
-export const getAnimeEpisode = async (id: string) => {
+export const getAnimeEpisodeGogo = async (id: string) => {
     try {
         const user = JSON.parse(localStorage.getItem('user')!);
 
