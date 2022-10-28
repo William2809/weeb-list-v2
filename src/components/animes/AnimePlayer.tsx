@@ -64,8 +64,8 @@ function AnimePlayer() {
         const epsGogo = await getAnimeEpisodeGogo(episodeId);
         const epsAnimix = await getAnimeEpisodeAnimix(episodeId);
         setExternal(epsGogo.headers.Referer);
-        console.log(epsGogo);
-        console.log(epsAnimix);
+        // console.log(epsGogo);
+        // console.log(epsAnimix);
         setEpisodes([epsGogo, epsAnimix]);
     }
     // active episode or current episodes
@@ -109,9 +109,9 @@ function AnimePlayer() {
                             </div>
                         </div>
                         {/* external player */}
-                        {/* <div className={`${externalActive ? "" : "hidden"} `}>
+                        <div className={`${externalActive ? "" : "hidden"} `}>
                             {external && <iframe className="w-full h-[360px]" src={external}></iframe>}
-                        </div> */}
+                        </div>
                         {gogoInfo.length !== 0 &&
                             (<div className="px-2.5 pt-2">
                                 <div className="text-white font-bold text-2xl">
@@ -180,9 +180,9 @@ function AnimePlayer() {
                             </div>
                         </div>
                         {/* external player */}
-                        {/* <div className={`${externalActive ? "" : "hidden"} `}>
+                        <div className={`${externalActive ? "" : "hidden"} `}>
                             {external && <iframe className="w-full md:h-[500px] lg:h-[700px] xl:h-[1080px]" src={external}></iframe>}
-                        </div> */}
+                        </div>
                         {gogoInfo.length !== 0 &&
                             (<div className="px-2.5 pt-2">
                                 <div className="text-white font-bold text-2xl">
