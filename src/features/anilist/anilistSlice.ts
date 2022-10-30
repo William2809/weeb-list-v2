@@ -21,6 +21,21 @@ export const getAnimeDetails = createAsyncThunk('anilist/getanimedetails', async
     }
 })
 
+// get anime schedule
+export const getSchedule = async (url: any) => {
+    try {
+        const user = JSON.parse(localStorage.getItem('user')!);
+        const token = user.token;
+        const result = await anilistService.getSchedule(token, url);
+        console.log(result);
+        return result;
+    } catch (error: any) {
+        const message: String = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+
+        return message;
+    }
+}
+
 export const anilistSlice = createSlice({
     name: 'anime',
     initialState,

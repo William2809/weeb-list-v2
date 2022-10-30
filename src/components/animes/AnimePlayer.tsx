@@ -65,7 +65,7 @@ function AnimePlayer() {
         const epsAnimix = await getAnimeEpisodeAnimix(episodeId);
         setExternal(epsGogo.headers.Referer);
         // console.log(epsGogo);
-        // console.log(epsAnimix);
+        console.log(epsAnimix);
         setEpisodes([epsGogo, epsAnimix]);
     }
     // active episode or current episodes

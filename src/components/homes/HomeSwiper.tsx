@@ -31,7 +31,7 @@ function HomeSwiper() {
                     <SwiperSlide key={index}>
                         <div className="relative h-[200px] xs:h-[240px] sm:h-[320px] md:h-[360px] lg:h-[500px] xl:h-[600px] w-screen">
                             <div className="" >
-                                <div className="absolute h-full w-full -z-10 bg-gradient-to-r from-[#000003db] via-[#0000035c] to-transparent" style={{ background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,0,0,0.7446165966386555) 32%, rgba(0,212,255,0) 100%);" }}></div>
+                                <div className="absolute h-full w-full -z-10 bg-gradient-to-r from-[#000003db] via-[#0000035c] to-transparent" style={{ background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,0,0,0.7446165966386555) 32%, rgba(0,212,255,0) 100%)" }}></div>
                                 <img src={anime.image} alt="image" className=" absolute h-full xl:h-auto w-full -z-20" />
                             </div>
                             <div className="flex h-full items-center p-4 ">
