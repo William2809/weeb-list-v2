@@ -104,7 +104,7 @@ function AnimePlayer() {
                                 </div>)
                             }
                             <div>
-                                {!externalActive && loadPlayer && episodes && <Plyr source={`${activeSource === "gogo" ? episodes[0].sources[0].url : episodes[1].sources[0].file}`} />}
+                                {!externalActive && loadPlayer && episodes && <Plyr source={`${activeSource === "gogo" ? episodes[0].sources[0].url : episodes[1].sources}`} />}
                                 {/* {externalActive && } */}
                             </div>
                         </div>
@@ -175,14 +175,14 @@ function AnimePlayer() {
                                 </div>)
                             }
                             <div>
-                                {!externalActive && loadPlayer && episodes && <Plyr source={`${activeSource === "gogo" ? episodes[0].sources[0].url : episodes[1].sources[0].file}`} />}
+                                {!externalActive && loadPlayer && episodes && <Plyr source={`${activeSource === "gogo" ? episodes[0].sources[0].url : episodes[1].sources}`} />}
                                 {/* {externalActive && } */}
                             </div>
                         </div>
                         {/* external player */}
-                        <div className={`${externalActive ? "" : "hidden"} `}>
+                        {/* <div className={`${externalActive ? "" : "hidden"} `}>
                             {external && <iframe className="w-full md:h-[500px] lg:h-[700px] xl:h-[1080px]" src={external}></iframe>}
-                        </div>
+                        </div> */}
                         {gogoInfo.length !== 0 &&
                             (<div className="px-2.5 pt-2">
                                 <div className="text-white font-bold text-2xl">
