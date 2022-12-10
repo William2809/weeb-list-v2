@@ -18,7 +18,7 @@ function AnimePlayer() {
 
     const [externalActive, setExternalActive]: any = useState(false);
 
-    const [activeSource, setActiveSource]: any = useState("gogo");
+    const [activeSource, setActiveSource]: any = useState("animix");
 
     const { width, height } = useWindowDimensions();
 
@@ -137,8 +137,8 @@ function AnimePlayer() {
                                 Episode Sources
                             </div>
                             <div className="pl-2 flex gap-3">
-                                <button className={` ${activeSource === "gogo" ? "bg-secondary-focus" : "bg-secondary"} text-white hover:bg-secondary-focus rounded-lg py-2 px-4`} onClick={() => { setActiveSource("gogo") }}>Gogoanime</button>
                                 <button className={`${activeSource === "animix" ? "bg-secondary-focus" : "bg-secondary"} text-white hover:bg-secondary-focus rounded-lg py-2 px-4`} onClick={() => { setActiveSource("animix") }}>Animix</button>
+                                <button className={` ${activeSource === "gogo" ? "bg-secondary-focus" : "bg-secondary"} text-white hover:bg-secondary-focus rounded-lg py-2 px-4`} onClick={() => { setActiveSource("gogo") }}>Gogoanime</button>
 
                             </div>
                         </div>
@@ -208,8 +208,8 @@ function AnimePlayer() {
                                 Episode Sources
                             </div>
                             <div className="pl-2 flex gap-3">
-                                <button className={` ${activeSource === "gogo" ? "bg-secondary-focus" : "bg-secondary"} text-white hover:bg-secondary-focus rounded-lg py-2 px-4`} onClick={() => { setActiveSource("gogo") }}>Gogoanime</button>
                                 <button className={`${activeSource === "animix" ? "bg-secondary-focus" : "bg-secondary"} text-white hover:bg-secondary-focus rounded-lg py-2 px-4`} onClick={() => { setActiveSource("animix") }}>Animix</button>
+                                <button className={` ${activeSource === "gogo" ? "bg-secondary-focus" : "bg-secondary"} text-white hover:bg-secondary-focus rounded-lg py-2 px-4`} onClick={() => { setActiveSource("gogo") }}>Gogoanime</button>
 
                             </div>
                         </div>

@@ -54,17 +54,14 @@ function BottomBar() {
         return (
             <div>
                 {(width < 640 && height > 450) &&
-                    <div className=" fixed bottom-0 z-20 px-2 h-[88px] bg-base-300 w-full flex flex-col items-center">
-                        <div>
-                            search bar... (Coming soon)
-                        </div>
+                    <div className=" fixed bottom-0 z-20 px-2 h-[64px] bg-base-300 w-full flex flex-col justify-center items-center">
                         <ul className="flex justify-between w-full">
                             {menus.map((menu, index) => (
                                 <Link key={index} to={`${index !== (menus.length) ? menu.destination : ''}`}>
-                                    <li className={` font-semibold rounded-md flex items-center justify-center  cursor-pointer h-[60px] w-[72px] hover:bg-secondary hover:text-white ${activeNav(index) ? ("bg-secondary text-white") : "text-neutral-focus"}`}>
+                                    <li className={` font-semibold rounded-md flex items-center justify-center  cursor-pointer h-[60px] w-[72px] hover:text-primary ${activeNav(index) ? (" text-primary") : "text-neutral-focus"}`}>
                                         <div className="flex flex-col justify-center items-center">
                                             {Components[index]}
-                                            <span className="duration-200 text-xs pt-1">
+                                            <span className="duration-200 text-xs font-normal pt-1">
                                                 {menu.title}
                                             </span>
                                         </div>
