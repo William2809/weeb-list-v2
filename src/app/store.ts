@@ -1,4 +1,4 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action, getDefaultMiddleware } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
 import gogoanimeReducer from '../features/gogoanime/gogoanimeSlice';
 import gogoSearchReducer from '../features/gogoanime/gogoSearchSlice';
@@ -18,6 +18,7 @@ export const store = configureStore({
     anilist: anilistReducer,
     [livechartApi.reducerPath]: livechartApi.reducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(livechartApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>

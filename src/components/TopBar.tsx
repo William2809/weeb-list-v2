@@ -87,7 +87,6 @@ function TopBar() {
 
                                             onBlur={(e) => {
                                                 setActiveSearch(!activeSearch);
-                                                console.log("here");
                                             }}
                                             onChange={(e) => setSearch(e.target.value)}
                                             value={search}
@@ -95,7 +94,7 @@ function TopBar() {
                                         {searchTab ?
                                             <div className="absolute w-full top-[50px] z-40 px-2 bg-neutral-focus rounded-md text-xs"
                                             >
-                                                {isLoading ? <div className="p-2 text-white">Loading...</div> : ""}
+                                                {isLoading && search.length > 0 ? <div className="p-2 text-white">Loading...</div> : ""}
                                                 {!isLoading && animeSearch.results && animeSearch.results.slice(0, 6).map((item: any) => (
                                                     <a href={`/anime/${item.id}`} key={item.id} className="" onClick={() => {
                                                         setSearch('');
@@ -137,7 +136,14 @@ function TopBar() {
                                         <MdSearch size="28px" className="ml-3 pointer-events-none" />
                                     </div>
                                     :
-                                    <div className="cursor-pointer" onClick={() => (setOpenSearch(!openSearch))}>
+                                    <div className="cursor-pointer" onClick={() => {
+                                        setSearchTab(false);
+                                        setOpenNav(false);
+                                        setOpenSearch(false);
+                                        setActiveSearch(false);
+                                        setOpenDropDown(false);
+                                        setSearch('');
+                                    }}>
                                         <MdClose size="28px" className="ml-3 pointer-events-none" />
                                     </div>
                                 }
@@ -161,12 +167,15 @@ function TopBar() {
                                             }}
 
                                             onBlur={(e) => { setActiveSearch(!activeSearch) }}
-                                            onChange={(e) => setSearch(e.target.value)}
+                                            onChange={(e) => {
+                                                setSearch(e.target.value);
+                                                setOpenSearch(true);
+                                            }}
                                             value={search} />
                                         {searchTab ?
                                             <div className="absolute w-full top-[50px] z-40 px-2 mt-1 bg-neutral-focus rounded-md text-xs"
                                             >
-                                                {isLoading ? <div className="p-2 text-white">Loading...</div> : ""}
+                                                {isLoading && search.length > 0 ? <div className="p-2 text-white">Loading...</div> : ""}
                                                 {!isLoading && animeSearch.results && animeSearch.results.slice(0, 6).map((item: any) => (
                                                     <a href={`/anime/${item.id}`} key={item.id} className="" onClick={() => {
                                                         setSearch('');
@@ -202,6 +211,21 @@ function TopBar() {
                                         }
 
                                     </div>
+
+                                    {openSearch &&
+
+                                        <div className="cursor-pointer flex items-center" onClick={() => {
+                                            setSearchTab(false);
+                                            setOpenNav(false);
+                                            setOpenSearch(false);
+                                            setActiveSearch(false);
+                                            setOpenDropDown(false);
+                                            setSearch('');
+                                        }}>
+                                            <MdClose size="36px" className="ml-3 pointer-events-none" />
+                                        </div>
+                                    }
+
                                     <Link to={'/discover'} className="flex rounded-lg bg-base-200 px-3 py-2.5 ml-7 ">
                                         <MdTune className="text-neutral" size="24px" />
                                         <div className="pl-2">

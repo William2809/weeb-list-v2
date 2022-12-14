@@ -32,7 +32,7 @@ function AnimeDetail() {
             if (animeDetail[1].nextAiringEpisode) {
                 setNextEpisode(animeDetail[1].nextAiringEpisode.airingTime * 1000);//set count down for next eps
             }
-            console.log(animeDetail)
+            // console.log(animeDetail)
         }
 
         return () => {

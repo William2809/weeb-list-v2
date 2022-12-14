@@ -4,7 +4,6 @@ const API_URL = process.env.REACT_APP_BACKEND_URL + '/api/gogoanime';
 //get latest anime
 const getLatest = async (token: string, url: any) => {
     const { page, type } = url;
-    console.log("page= " + page + " type= " + type)
     const config =
     {
         method: 'get',

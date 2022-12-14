@@ -6,11 +6,9 @@ import { useEffect, useState } from 'react';
 import Clock from 'react-live-clock';
 
 function Schedule() {
-    const { data, isSuccess, isLoading, error }: any = useGetScheduleQuery();
+    const { data, isSuccess, isLoading, error }: any = useGetScheduleQuery(format(new Date(), 'yyyy-MM-dd'));
     const navigate = useNavigate();
     const [todayAnime, setTodayAnime]: any = useState([]);
-
-    // let todayAnime: any = [];
 
     const sortSchedule = (data: any) => {
         data = data.sort((a: any, b: any) => {
@@ -18,14 +16,6 @@ function Schedule() {
                 return -1;
             }
         });
-        // console.log(data);
-        // data.map((schedule: any, i: any) => {
-        //     console.log(parseISO(schedule.time));
-        // })
-        // if (todayAnime !=== []) {
-        // setTodayAnime(data);
-        // }
-        // todayAnime = data;
         return data;
     }
 
@@ -35,7 +25,6 @@ function Schedule() {
 
     useEffect(() => {
         if (data) {
-
             //add current time
             const current = {
                 'time': formatISO(new Date),
@@ -56,9 +45,6 @@ function Schedule() {
         navigate(`/anime/${animeInfo.animeId}`);
     }
 
-    // 
-    // console.log(current);
-    // data.days[0].timeslots.push()
     if (isLoading) {
         return (<div>Loading...</div>)
     }
@@ -67,22 +53,18 @@ function Schedule() {
         <div className='flex flex-wrap justify-between'>
             {data.days?.map((day: any, i: number) => {
                 const day_name = format(parseISO(day.beginning_of_day), 'cccc');
-                if (i === 0) {
-                    // // setTodayAnime(data.days[0]);
-                    // todayList.push(data?.day[0]);
-                    // console.log(todayList);
-                }
+
                 return (
-                    <div className='w-[450px]'>
+                    <div className='w-[450px] ' key={i}>
                         {(i == 0 ?
-                            <div key={i}>
+                            <div>
                                 <div className="text-2xl text-white font-bold m-2 ml-4">{day_name} | {day.date}</div>
 
                                 {todayAnime.map((animes: any, j: number) => {
 
                                     if (animes.timeless) {
                                         return (
-                                            <div className='mx-2 bg-secondary p-2 rounded-xl text-white'>
+                                            <div key={j} className='mx-2 bg-secondary p-2 rounded-xl text-white'>
                                                 Now <Clock format={'h:mm:ss A'} ticking={true} />
                                             </div>
                                         )

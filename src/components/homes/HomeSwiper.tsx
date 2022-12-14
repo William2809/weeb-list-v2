@@ -12,7 +12,6 @@ SwiperCore.use([Autoplay]);
 function HomeSwiper() {
     const swiperRef = useRef<SwiperType>();
 
-    console.log(animes);
     return (
         <div>
             <Swiper

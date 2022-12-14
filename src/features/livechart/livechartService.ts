@@ -8,7 +8,7 @@ export const livechartApi = createApi({
         baseUrl: API_URL
     }),
     endpoints: (builder) => ({
-        getSchedule: builder.query<any, void>({ query: () => '/timetable' }),
+        getSchedule: builder.query<any, string>({ query: (date) => `/timetable?date=${date}` }),
     })
 })
 
