@@ -5,6 +5,8 @@ import gogoSearchReducer from '../features/gogoanime/gogoSearchSlice';
 import enimeReducer from '../features/enime/enimeSlice';
 import anilistReducer from '../features/anilist/anilistSlice';
 import gogoanimeApiReducer from '../features/gogoanimeApi/gogoanimeApiSlice';
+import { livechartApi } from '../features/livechart/livechartService';
+
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +16,7 @@ export const store = configureStore({
     gogosearch: gogoSearchReducer,
     enime: enimeReducer,
     anilist: anilistReducer,
+    [livechartApi.reducerPath]: livechartApi.reducer,
   },
 });
 

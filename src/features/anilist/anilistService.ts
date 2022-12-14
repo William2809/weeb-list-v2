@@ -25,7 +25,7 @@ const getAnimeDetails = async (token: string, title: string) => {
 const getSchedule = async (token: string, url: any) => {
     const { page, perpage, weekstart, weekend, notyetaired } = url;
     // console.log("page= " + page + " type= " + type)
-    console.log(page, perpage, weekstart, weekend, notyetaired);
+    // console.log(page, perpage, weekstart, weekend, notyetaired);
     const config =
     {
         method: 'get',

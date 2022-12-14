@@ -11,8 +11,20 @@ const getAnimeEpisode = async (token: string, id: string) => {
     const response = await axios(config);
     return response.data;
 }
-const animixService = {
 
+//get anime info by malid
+const getAnimeInfo = async (token: string, id: string) => {
+    const config =
+    {
+        method: 'get',
+        url: API_URL + 'animix/info/' + id,
+    }
+    const response = await axios(config);
+    return response.data;
+}
+
+const animixService = {
+    getAnimeInfo,
     getAnimeEpisode,
 }
 
