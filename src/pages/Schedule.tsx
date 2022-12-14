@@ -42,7 +42,10 @@ function Schedule() {
     const navigateTo = async (url: string) => {
         const lastUrl = url.substring(url.lastIndexOf("/") + 1, url.length);
         const animeInfo = await getAnimeInfoAnimix(lastUrl);
-        navigate(`/anime/${animeInfo.animeId}`);
+        // console.log(animeInfo);
+        if (animeInfo.animeId) {
+            navigate(`/anime/${animeInfo.animeId}`);
+        }
     }
 
     if (isLoading) {
@@ -74,22 +77,23 @@ function Schedule() {
                                     const time = format(parseISO(animes.time), 'pp');
                                     const title = animes?.episodes[0]?.anime?.romaji_title
                                     const malUrl = animes?.episodes[0]?.anime?.mal_url;
-
-                                    return (
-                                        <Link className='group flex mx-2 gap-2 my-1 p-2 hover:bg-secondary rounded-xl' key={j} onClick={() => navigateTo(malUrl)} to={''}>
-                                            <div className='flex-shrink-0'>
-                                                <img className="w-[50px] h[100px] rounded-lg" src={image} alt="" />
-                                            </div>
-                                            <div className=''>
-                                                <div className=" md:text-lg text-sm font-semibold text-white">
-                                                    {title}
+                                    if (malUrl) {
+                                        return (
+                                            <Link className='group flex mx-2 gap-2 my-1 p-2 hover:bg-secondary rounded-xl' key={j} onClick={() => navigateTo(malUrl)} to={''}>
+                                                <div className='flex-shrink-0'>
+                                                    <img className="w-[50px] h[100px] rounded-lg" src={image} alt="" />
                                                 </div>
-                                                <div className='text-base text-neutral font-normal group-hover:text-white'>
-                                                    {time}
+                                                <div className=''>
+                                                    <div className=" md:text-lg text-sm font-semibold text-white">
+                                                        {title}
+                                                    </div>
+                                                    <div className='text-base text-neutral font-normal group-hover:text-white'>
+                                                        {time}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </Link>
-                                    )
+                                            </Link>
+                                        )
+                                    }
                                 })}
                             </div>
                             :
@@ -102,22 +106,23 @@ function Schedule() {
                                     const title = animes?.episodes[0]?.anime?.romaji_title
                                     const malUrl = animes?.episodes[0]?.anime?.mal_url;
 
-
-                                    return (
-                                        <Link className='group flex mx-2 gap-2 my-1 p-2 hover:bg-secondary rounded-xl' key={j} onClick={() => navigateTo(malUrl)} to={''}>
-                                            <div className='flex-shrink-0'>
-                                                <img className="w-[50px] h[100px] rounded-lg" src={image} alt="" />
-                                            </div>
-                                            <div>
-                                                <div className="md:text-lg text-sm font-semibold text-white">
-                                                    {title}
+                                    if (malUrl) {
+                                        return (
+                                            <Link className='group flex mx-2 gap-2 my-1 p-2 hover:bg-secondary rounded-xl' key={j} onClick={() => navigateTo(malUrl)} to={''}>
+                                                <div className='flex-shrink-0'>
+                                                    <img className="w-[50px] h[100px] rounded-lg" src={image} alt="" />
                                                 </div>
-                                                <div className='text-base text-neutral font-normal group-hover:text-white'>
-                                                    {time}
+                                                <div>
+                                                    <div className="md:text-lg text-sm font-semibold text-white">
+                                                        {title}
+                                                    </div>
+                                                    <div className='text-base text-neutral font-normal group-hover:text-white'>
+                                                        {time}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </Link>
-                                    )
+                                            </Link>
+                                        )
+                                    }
                                 })}
                             </div>
                         )}
