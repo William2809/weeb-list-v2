@@ -24,7 +24,7 @@ const Plyr = React.forwardRef<HTMLPlyrVideoElement, PlyrProps>(
             ...options,
             quality: {
                 default: 1080,
-                options: [1080],
+                options: [1080, 720, 480],
             },
         };
 

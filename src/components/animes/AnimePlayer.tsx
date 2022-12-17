@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { MdPlayCircle } from 'react-icons/md';
+import { useEffect, useState } from 'react'
 import { getAnimeEpisodeGogo, getAnimeInfo } from '../../features/gogoanime/gogoanimeSlice';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import Plyr from '../Plyr';
-import { checkUrl } from './idCornerCase';
-import { getAnimeEpisodeAnimix } from '../../features/animix/animixSlice';
+import { getAnimeEpisodeAnimix, getAnimeSeriesAnimix, getAnimeIdAnimix, getAnimeInfoAnimix } from '../../features/animix/animixSlice';
+import { useNavigate } from 'react-router-dom';
+
+import { MdPlayCircle } from 'react-icons/md';
+import { RiStarSFill } from 'react-icons/ri';
 
 function AnimePlayer() {
 
@@ -14,11 +16,12 @@ function AnimePlayer() {
 
     const [loadPlayer, setLoadPlayer]: any = useState(false);
     const [episodes, setEpisodes]: any = useState(null);
-    const [external, setExternal]: any = useState(null);
-
-    const [externalActive, setExternalActive]: any = useState(false);
 
     const [activeSource, setActiveSource]: any = useState("animix");
+    const [malId, setMalId]: any = useState(null);
+
+    //series
+    const [series, setSeries]: any = useState(null);
 
     const { width, height } = useWindowDimensions();
 
@@ -33,17 +36,13 @@ function AnimePlayer() {
         id = lastUrl;
     }
 
-    //check any id mistakes
-    const correction = checkUrl(id);
-    if (correction !== "-1") {
-        id = correction;
-    }
-
     //function get episode from gogoanime
     const getEpisodeList = async () => {
         var data = await getAnimeInfo(id);
+        var animixEpisode = await getAnimeIdAnimix(id);
         setGogoInfo(data);
         setGenres(data.genres);
+
         //set all eps into unactive and activate last episode
         data.episodes.forEach((item: any) => {
             item['active'] = false;
@@ -57,21 +56,22 @@ function AnimePlayer() {
             }
         })
 
+        var series = await getAnimeSeriesAnimix(animixEpisode.mal_id);
+
         setEpisodeLists(data.episodes);
+        setMalId(animixEpisode.mal_id)
+        setSeries(series);
     }
 
     const getEpisodeSource = async (episodeId: string) => {
         const epsGogo = await getAnimeEpisodeGogo(episodeId);
         const epsAnimix = await getAnimeEpisodeAnimix(episodeId);
-        setExternal(epsGogo.headers.Referer);
-        // console.log(epsGogo);
-        // console.log(epsAnimix);
         setEpisodes([epsGogo, epsAnimix]);
     }
+
     // active episode or current episodes
     const activeEpisode: any = (number: number) => {
         var newArr = [...episodeLists];
-        // console.log(newArr);
         newArr.forEach((item: any) => {
             item.active = false;
             if (item.number === number) {
@@ -87,9 +87,19 @@ function AnimePlayer() {
         setLoadPlayer(true);
     }
 
+    const navigate = useNavigate();
+
+    const navigateTo = async (id: string) => {
+        const animeInfo = await getAnimeInfoAnimix(id);
+        if (animeInfo.animeId) {
+            navigate(`/anime/${animeInfo.animeId}`);
+        }
+    }
+
     useEffect(() => {
         getEpisodeList();
-    }, []);
+    }, [navigate]);
+
 
     return (
         <div>
@@ -104,13 +114,8 @@ function AnimePlayer() {
                                 </div>)
                             }
                             <div>
-                                {!externalActive && loadPlayer && episodes && <Plyr source={`${activeSource === "gogo" ? episodes[0].sources[0].url : episodes[1].sources}`} />}
-                                {/* {externalActive && } */}
+                                {loadPlayer && episodes && <Plyr source={`${activeSource === "gogo" ? episodes[0].sources[0].url : episodes[1].sources}`} />}
                             </div>
-                        </div>
-                        {/* external player */}
-                        <div className={`${externalActive ? "" : "hidden"} `}>
-                            {external && <iframe className="w-full h-[360px]" src={external}></iframe>}
                         </div>
                         {gogoInfo.length !== 0 &&
                             (<div className="px-2.5 pt-2">
@@ -149,17 +154,55 @@ function AnimePlayer() {
                                 </div>
                             ))}
                         </div>
-                        <div className="pl-2">
-                            {!externalActive &&
-                                <div className="py-2">
-                                    To download the episode, please switch to external player.
-                                </div>
-                            }
-                            <div>
-                                <button className="bg-secondary rounded-lg hover:bg-secondary-focus py-2 px-4 text-white" onClick={() => { setExternalActive(!externalActive); setLoadPlayer(true) }}>Switch to External</button>
-                            </div>
 
+                        <div>
+                            {series?.message === true &&
+                                <div className='mt-1'>
+                                    <div className="px-2 text-white font-semibold text-lg sm:text-xl md:text-2xl">
+                                        {series.title}
+                                    </div>
+                                    <div className='mt-1 flex flex-wrap gap-[6px]   overflow-y-auto h-[240px]'>
+                                        {series.series.map((anime: any, i: number) => {
+                                            return (
+                                                <div
+                                                    key={i}
+                                                    className={`cursor-pointer w-full group flex mx-2 gap-2 my-1 p-2 hover:bg-secondary rounded-xl ${anime.id === parseInt(malId) ? 'bg-slate-600' : ''}`}
+                                                    onClick={() => { navigateTo(anime.id) }}
+                                                >
+                                                    <div className='flex-shrink-0'>
+                                                        <img className="w-[70px] h-[100px] rounded-lg" src={anime.image_url} alt="" />
+                                                    </div>
+                                                    <div className='flex flex-col justify-between'>
+                                                        <div >
+                                                            <div className=" md:text-lg text-sm font-semibold text-white">
+                                                                <span className="text-primary">[ {anime.type} ]</span> {anime.title}
+                                                            </div>
+
+                                                            <div className="mt-1 md:text-lg text-sm font-medium text-neutral flex gap-2 items-center">
+                                                                <div className='px-2 pt-[2px] pb-[2px] border-[2px] border-primary rounded-xl text-sm flex gap-1 items-center'>
+                                                                    <RiStarSFill size="16" className="text-yellow-400 " /> {anime.score / 100}
+                                                                </div>
+
+                                                                <div className='px-2 pt-[2px] pb-[2px] border-[2px] border-primary rounded-xl text-sm'>
+                                                                    {anime.episodes} Episode{anime.episodes > 1 ? "s" : ""}
+                                                                </div>
+                                                            </div>
+                                                            <div className="mt-1 md:text-ms text-xs font-normal text-neutral">
+                                                                {anime.type === "TV" ? `Aired from ${anime.time}` : `Aired at ${anime.time}`}
+                                                            </div>
+                                                        </div>
+                                                        <div className="text-sm font-semibold text-white">
+                                                            {anime.id === parseInt(malId) && 'Currently Watching'}
+                                                        </div>
+                                                    </div>
+                                                </div>)
+                                        })}
+                                    </div>
+                                </div>
+
+                            }
                         </div>
+
                     </div>
                 </div>)}
 
@@ -175,14 +218,9 @@ function AnimePlayer() {
                                 </div>)
                             }
                             <div>
-                                {!externalActive && loadPlayer && episodes && <Plyr source={`${activeSource === "gogo" ? episodes[0].sources[0].url : episodes[1].sources}`} />}
-                                {/* {externalActive && } */}
+                                {loadPlayer && episodes && <Plyr source={`${activeSource === "gogo" ? episodes[0].sources[0].url : episodes[1].sources}`} />}
                             </div>
                         </div>
-                        {/* external player */}
-                        {/* <div className={`${externalActive ? "" : "hidden"} `}>
-                            {external && <iframe className="w-full md:h-[500px] lg:h-[700px] xl:h-[1080px]" src={external}></iframe>}
-                        </div> */}
                         {gogoInfo.length !== 0 &&
                             (<div className="px-2.5 pt-2">
                                 <div className="text-white font-bold text-2xl">
@@ -223,17 +261,54 @@ function AnimePlayer() {
                             ))}
                         </div>
 
-                        <div className="pl-2">
-                            {!externalActive &&
-                                <div className="py-2">
-                                    To download the episode, please switch to external player.
-                                </div>
-                            }
-                            <div>
-                                <button className="bg-secondary rounded-lg hover:bg-secondary-focus py-2 px-4 text-white" onClick={() => { setExternalActive(!externalActive); setLoadPlayer(true) }}>Switch to External</button>
-                            </div>
+                        <div>
+                            {series?.message === true &&
+                                <div className='mt-1'>
+                                    <div className="px-2 text-white font-semibold text-lg sm:text-xl md:text-2xl">
+                                        {series.title}
+                                    </div>
+                                    <div className='mt-1 flex flex-wrap gap-[6px]   overflow-y-auto h-[240px]'>
+                                        {series.series.map((anime: any, i: number) => {
+                                            return (
+                                                <div
+                                                    key={i}
+                                                    className={`cursor-pointer w-full group flex mx-2 gap-2 my-1 p-2 hover:bg-secondary rounded-xl ${anime.id === parseInt(malId) ? 'bg-slate-600' : ''}`}
+                                                    onClick={() => { navigateTo(anime.id) }}
+                                                >
+                                                    <div className='flex-shrink-0'>
+                                                        <img className="w-[70px] h-[100px] rounded-lg" src={anime.image_url} alt="" />
+                                                    </div>
+                                                    <div className='flex flex-col justify-between'>
+                                                        <div >
+                                                            <div className=" md:text-lg text-sm font-semibold text-white">
+                                                                <span className="text-primary">[ {anime.type} ]</span> {anime.title}
+                                                            </div>
 
+                                                            <div className="mt-1 md:text-lg text-sm font-medium text-neutral flex gap-2 items-center">
+                                                                <div className='px-2 pt-[2px] pb-[2px] border-[2px] border-primary rounded-xl text-sm flex gap-1 items-center'>
+                                                                    <RiStarSFill size="16" className="text-yellow-400 " /> {anime.score / 100}
+                                                                </div>
+
+                                                                <div className='px-2 pt-[2px] pb-[2px] border-[2px] border-primary rounded-xl text-sm'>
+                                                                    {anime.episodes} Episode{anime.episodes > 1 ? "s" : ""}
+                                                                </div>
+                                                            </div>
+                                                            <div className="mt-1 md:text-ms text-xs font-normal text-neutral">
+                                                                {anime.type === "TV" ? `Aired from ${anime.time}` : `Aired at ${anime.time}`}
+                                                            </div>
+                                                        </div>
+                                                        <div className="text-sm font-semibold text-white">
+                                                            {anime.id === parseInt(malId) && 'Currently Watching'}
+                                                        </div>
+                                                    </div>
+                                                </div>)
+                                        })}
+                                    </div>
+                                </div>
+
+                            }
                         </div>
+
                     </div>
                 </div>)}
 

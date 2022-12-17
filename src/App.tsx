@@ -49,12 +49,12 @@ function App() {
               <Route path='/setting' element={<Setting />} />
             </Route>
 
-            <Route path='/anime/:id/latest' element={<PrivateRoute />}>
-              <Route path='/anime/:id/latest' element={<Anime />} />
+            <Route path='/anime/:animeId/latest' element={<PrivateRoute />}>
+              <Route path='/anime/:animeId/latest' element={<Anime />} />
             </Route>
 
-            <Route path='/anime/:id' element={<PrivateRoute />}>
-              <Route path='/anime/:id' element={<Anime />} />
+            <Route path='/anime/:animeId' element={<PrivateRoute />}>
+              <Route path='/anime/:animeId' element={<Anime />} />
             </Route>
 
           </Routes>

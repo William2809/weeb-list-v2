@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { MdMenu, MdHome, MdEvent, MdExplore, MdVideoLibrary, MdSettings, MdLogout } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { RootState } from '../app/store';
 import { logout, reset } from '../features/auth/authSlice';
 import useWindowDimensions from '../hooks/useWindowDimensions';
