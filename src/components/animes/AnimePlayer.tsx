@@ -67,6 +67,8 @@ function AnimePlayer() {
         const epsGogo = await getAnimeEpisodeGogo(episodeId);
         const epsAnimix = await getAnimeEpisodeAnimix(episodeId);
         setEpisodes([epsGogo, epsAnimix]);
+        console.log(epsGogo);
+        console.log(epsAnimix);
     }
 
     // active episode or current episodes
@@ -261,6 +263,7 @@ function AnimePlayer() {
                             ))}
                         </div>
 
+                        {/* Series */}
                         <div>
                             {series?.message === true &&
                                 <div className='mt-1'>

@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Swiper as SwiperType, Navigation } from 'swiper';
 import { Autoplay } from 'swiper';
 import animes from '../../assets/slider-home.json';
-import { MdCalendarToday, MdLiveTv, MdOutlineAccessTime, MdPlayCircleOutline } from 'react-icons/md';
+import { MdAdd, MdCalendarToday, MdLiveTv, MdOutlineAccessTime, MdPlayCircleOutline } from 'react-icons/md';
 
 import "swiper/css";
 
@@ -36,7 +36,7 @@ function HomeSwiper() {
                             <div className="flex h-full items-center p-4 ">
                                 <div>
                                     <div className="text-xs md:text-sm lg:text-lg mb-2">#{index + 1} spotlight</div>
-                                    <h1 className="text-xl sm:text-2xl md:text-4xl font-bold text-white mb-1">{anime.title}</h1>
+                                    <h1 className="text-lg sm:text-2xl md:text-4xl font-bold text-white mb-1">{anime.title}</h1>
                                     <div className="w-[200px] mb-2 text-white text-xs sm:text-sm md:text-base lg:text-lg">
                                         <div className="w-full flex items-center gap-1 ">
                                             <MdLiveTv /> <span>{anime.type}</span>
@@ -48,11 +48,18 @@ function HomeSwiper() {
                                             <MdCalendarToday /> <span>2022</span>
                                         </div>
                                     </div>
-                                    <a href={`/anime/${anime.animeId}`}>
-                                        <div className="flex gap-1 w-[120px] items-center justify-center p-1 bg-secondary rounded-lg text-white text-sm hover:bg-secondary-focus">
-                                            <span><MdPlayCircleOutline size="24px" /></span> Watch Now
-                                        </div>
-                                    </a>
+                                    <div className="flex gap-2 items-center">
+                                        <a href={`/anime/${anime.animeId}`}>
+                                            <div className="flex gap-1 w-[120px] items-center justify-center p-1 bg-secondary rounded-lg text-white text-xs sm:text-sm hover:bg-secondary-focus">
+                                                <span><MdPlayCircleOutline size="20px" /></span> Watch Now
+                                            </div>
+                                        </a>
+                                        <a>
+                                            <div className="flex gap-1 w-[152px] items-center justify-center p-1 bg-secondary rounded-lg text-white text-xs sm:text-sm hover:bg-secondary-focus">
+                                                <span><MdAdd size="20px" /></span> Add To Watchlist
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
